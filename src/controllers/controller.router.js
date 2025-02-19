@@ -1,3 +1,4 @@
+import { count } from 'console';
 import fs from 'fs'
 import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
@@ -28,9 +29,9 @@ const home = (req, res) => {
 const cities = (req, res) => {
     const pathRouter = join(__dirname,"..","data","cities.json")
 
-    const cityToSearch = req.params.city || ''
+    const countryId = req.params.city || ''
 
-    if (cityToSearch.length > 2) {
+    if (countryId.length > 2) {
         return res.render('cities', {title: 'Consulado contigo',page:"cities", data:[], country:""})
     }
     
@@ -44,20 +45,20 @@ const cities = (req, res) => {
         const country = JSON.parse(file).country
         
         // busca la ciudad
-        const data = country.filter(city => city.id === cityToSearch)
+        const data = country.filter(country => country.id === countryId)
 
         // renderiza la vista
-        return res.render('cities', {title: 'Consulado contigo',page:"cities", data, country:cityToSearch})
+        return res.render('cities', {title: 'Consulado contigo',page:"cities", data, country:countryId})
     })
 }
 
 const consulates = (req, res) => {
-    const pathRouter = join(__dirname,"..","data","cities.json")
+    const pathRouter = join(__dirname,"..","data","consulates.json")
 
-    const cityToSearch = req.params.city || ''
+    const countryId = req.params.consulate || ''
 
-    if (cityToSearch.length > 2) {
-        return res.render('cities', {title: 'Consulado contigo',page:"cities", data:[], country:""})
+    if (countryId.length > 2) {
+        return res.render('consulates', {title: 'Consulado contigo',page:"consulates", data:[], country:""})
     }
     
     // Lee el archivo
@@ -70,10 +71,10 @@ const consulates = (req, res) => {
         const country = JSON.parse(file).country
         
         // busca la ciudad
-        const data = country.filter(city => city.id === cityToSearch)
-
+        const data = country.filter(country => country.id === countryId)
+        
         // renderiza la vista
-        return res.render('cities', {title: 'Consulado contigo',page:"cities", data, country:cityToSearch})
+        return res.render('consulates', {title: 'Consulado contigo',page:"consulates", data, country:countryId})
     })
 }
 

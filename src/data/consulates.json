@@ -1,0 +1,35 @@
+{
+    "country": [
+        {
+            "id": "ve",
+            "consulates": [
+                {
+                    "id": 1,
+                    "city": "Puerto Ordaz",
+                    "address":"Planta Baja del Edificio de la Torre Corporativa Bell, Urbanización Los Samanes, Alta Vista",
+                    "phone":"+58 424 9672 940",
+                    "email":"puertoordaz@consulado.gob.cl"
+                },
+                {
+                    "id": 2,
+                    "city": "Caracas",
+                    "address":"Quinta San Joaquin, Calle7, Entre 6ta y 7ma Transversal de Altamira, Caracas, Municipio Chacao (frente al Colegio Cristo Rey)",
+                    "phone":"+58 412 3362 104",
+                    "email":"caracas@consulado.gob.cl"
+                }
+            ]
+        },
+        {
+            "id":"mx",
+            "consulates": [
+                {
+                    "id": 1,
+                    "city": "Ciudad de México",
+                    "address":"Campos Eliseos 188, piso 14, Colonia Polanco, delegación Miguel Hidalgo C.P. 11550",
+                    "phone":"52 1 (55) 35788639",
+                    "email":"ciudaddemexico@consulado.gob.cl"
+                }
+            ]
+        }
+    ]
+}

@@ -26,12 +26,12 @@
 
     <div class="container-fluid px-2 px-md-5 py-3"  style="background-color: #e6e6e6;">
         <div class="text-center">
-            <h1 class="display-3 text-primary">Ciudades con redes de apoyos</h1>
+            <h1 class="display-3 text-primary">Consulado General de Venezuela</h1>
             <p class="lead fw-normal">
                 <% if (data.length !== 0 && country !== "") {%>
                     <i class="bi bi-search text-primary"></i> Selecciona una opción <i class="bi bi-search text-primary"></i>
                 <% }else if (data.length === 0 && country !== "") { %>
-                    <i class="bi bi-exclamation-triangle text-primary"></i> No se encontraron ciudades con redes de apoyo en el país seleccionado <i class="bi bi-exclamation-triangle text-primary"></i>
+                    <i class="bi bi-exclamation-triangle text-primary"></i> No se encontraron consulados en el país seleccionado. <i class="bi bi-exclamation-triangle text-primary"></i>
                 <% }else{ %>
                     <i class="bi bi-info-square text-primary"></i> Debe de seleccionar un país para poder ver las ciudades con redes locales disponible <i class="bi bi-info-square text-primary"></i>
                 <% } %>
@@ -39,15 +39,26 @@
         </div>
 
         <div class="row justify-content-center">
-            <% if (data.length !== 0) { for (const element of data[0].cities) { %>
+            <% if (data.length !== 0) { for (const element of data[0].consulates) { %>
             <div class="col-12 col-md-6 col-lg-4 py-2">
                 <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="text-primary display-1 bi bi-buildings"></i>
-                        <h5 class="card-title"><%= element.name %></h5>
-                        <a href="#<%=element.id%>" class="card-link icon-link fw-semibold">
-                            Ver <i class="bi bi-arrow-right"></i>
-                        </a>
+                    <div class="card-body ">
+                        <div class="text-center"><i class="text-primary display-1 bi bi-bank2"></i></div>
+                        <h5 class="card-title text-center h3"><%= element.city %></h5>
+                        <ul>
+                            <li><span class="text-primary fw-semibold">Dirección: </span>
+                                <%= element.address %>
+                            </li>
+                            <li><span class="text-primary fw-semibold">Teléfono: </span>
+                                <%= element.phone %>
+                            </li>
+                            <li><span class="text-primary fw-semibold">Correo: </span>
+                                <%= element.email %>
+                            </li>
+                        </ul>
+                        <p class="card-text"></p>
+                        <p class="card-text"></p>
+                        <p class="card-text"></p>
                     </div>
                 </div>
             </div>
@@ -59,7 +70,7 @@
     <script>
         document.getElementById("country").value = "<%= country %>"
         function specifyCountry(val) {
-            window.location.href = `/cities/${val}`
+            window.location.href = `/consulates/${val}`
         }
     </script>
     <script src="/js/loader.js"></script>
