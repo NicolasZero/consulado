@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand bg-body-tertiary">
+<nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand m-0 p-0">
             <img src="/img/logo.png" height="32" alt="Inamujer Consulado Contigo" height="80">
@@ -6,21 +6,37 @@
 
         <!-- <button class="btn btn-outline-primary d-md-none d-block">Iniciar sesión<i class="bi bi-box-arrow-in-right"></i></button> -->
 
-        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-list"></i>
-        </button> -->
+        </button>
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <div class="d-none d-md-block flex-fill">
+            <!-- <div class="d-none d-md-block flex-fill">
                 <label class="form-label my-auto mx-0 px-3" for="f1">Seleccione una ubicación</label>
                 <div class="px-3 w-100">
-                    <select class="form-select text-primary" aria-label="Seleccione una opción" name="f1" id="f1">
+                    <select class="form-select text-primary" aria-label="Seleccione una opción" name="f1" id="f1" onchange="specifyCountry(this.value)">
                         <option selected>Seleccione una opción</option>
                         <%- include('countrySelector') %>
                     </select>
                 </div>
-            </div>
+            </div> -->
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-hover <% if (page === 'home') { %>active<% } %>" href="/">Inicio</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-hover <% if (page === 'cities') { %>active<% } %>" href="/cities">Red local</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-hover <% if (page === 'consulate') { %>active<% } %>" href="/consulate">Consulado</a>
+                </li>
+            </ul>
+
+
 
             <!-- <a href="#" class="btn btn-outline-primary d-none d-lg-block">Iniciar sesión <i class="bi bi-box-arrow-in-right"></i></a> -->
             <a href="#" class="btn btn-outline-primary ">Iniciar sesión <i class="bi bi-box-arrow-in-right"></i></a>
@@ -28,7 +44,7 @@
         </div>
     </div>
 </nav>
-<div class="d-block d-md-none text-white py-1" style="background-color: #161616;">
+<!-- <div class="d-block d-md-none text-white py-1" style="background-color: #161616;">
     <label class="form-label my-auto mx-0 px-3" for="f2">Seleccione una ubicación</label>
     <div class="px-3 w-100">
         <select class="form-select text-primary" aria-label="Seleccione una opción" name="f1" id="f2">
@@ -36,4 +52,4 @@
             <%- include('countrySelector') %>
         </select>
     </div>
-</div>
+</div> -->

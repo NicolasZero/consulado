@@ -103,6 +103,23 @@
 
     <%- include('includes/footer') %>
     <script src="/js/loader.js"></script>
+    <script>
+        let newValue = ''
+        const redLocal = (value) => {
+            console.log('old value',newValue)
+            newValue = value
+            console.log('new value',value)
+            
+        }
+
+        const specifyCountry = (value) => {
+            // console.log('old value',newValue)
+            newValue = value
+            // console.log('new value',value)
+            console.log(value);
+            
+        }
+    </script>
 </body>
 
 </html>

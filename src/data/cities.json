@@ -1,0 +1,28 @@
+{
+    "country": [
+        {
+            "id": "ve",
+            "name": "Venezuela",
+            "cities": [
+                {
+                    "id": 1,
+                    "name": "Puerto Ordaz"
+                },
+                {
+                    "id": 2,
+                    "name": "Caracas"
+                }
+            ]
+        },
+        {
+            "id":"mx",
+            "name": "México",
+            "cities": [
+                {
+                    "id": 1,
+                    "name": "Ciudad de México"
+                }
+            ]
+        }
+    ]
+}
