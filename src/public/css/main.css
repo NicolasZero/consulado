@@ -1,0 +1,48 @@
+/* hacer que el footer se vea abajo */
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* footer */
+footer{
+    margin-top: auto;
+    background-color: #161616;
+}
+
+/* hover */
+.hover:hover{
+    color: var(--bs-primary) !important;
+}
+
+/* active */
+.navbar-nav .nav-link.active,.nav-link.active{
+    font-weight: bold;
+    color: var(--bs-primary) !important;
+}
+
+/* hover */
+.nav-link-hover:hover{
+    text-decoration: underline;
+    color: var(--bs-primary) !important;
+}
+
+/* tabs */
+.nav-tabs{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+textarea{
+    resize: vertical;
+}
+
+.blur{
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.blur:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+}

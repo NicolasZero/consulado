@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <%- include('includes/head') %>
+</head>
+
+<body>
+    <div class="loader-page"></div>
+    <%- include('includes/nav') %>
+
+    <%- include('includes/directory') %>
+
+    <div class="container py-3">
+        <div class="text-center py-2">
+            <h2 class="h1 text-primary">Bienvenida</h2>
+            <p class="lead fw-normal">Este sitio está dirigido a venezolanas que están fuera del país y están viviendo violencia de
+                género.
+                Aquí
+                encontrarás información sobre qué es la violencia contra la mujer, los tipos de violencia y sus
+                manifestaciones, como también, los canales de orientación e información disponibles, que el
+                Estado
+                venezolano
+                ofrece a través de la red de consulados de Venezuela en el mundo. No estás sola, estamos contigo
+            </p>
+        </div>
+
+        <div class="row justify-content-center align-items-stretch">
+            <div class="col-12 col-md-6 col-lg-4 py-2">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="text-primary display-1 bi bi-exclamation-triangle"></i>
+                        <h5 class="card-title">Señales de alerta</h5>
+                        <p class="card-text text-start">La violencia de género contra las mujeres es una
+                            manifestación
+                            de ejercicio
+                            de poder y discriminación que afecta el goce de sus derechos humanos y libertades
+                            fundamentales.</p>
+                        <a href="#" class="card-link icon-link fw-semibold">Saber más <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4 py-2">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="text-primary display-1 bi bi-question-circle"></i>
+                        <h5 class="card-title">¿Estás viviendo violencia de género?</h5>
+                        <p class="card-text text-start">Si eres mujer que vive violencia de género, es
+                            importante que
+                            sepas que no estás sola. Aquí hay algunos pasos que puedes seguir.</p>
+                        <a href="#" class="card-link icon-link fw-semibold">Saber más <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4 py-2">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="text-primary display-1 bi bi-chat-square-dots"></i>
+                        <h5 class="card-title">Orientación</h5>
+                        <p class="card-text text-start">El consulado de Venezuela te puede ofrecer asistencia y
+                            orientación
+                            si eres mujer que vive violencia de género en el extranjero.</p>
+                        <a href="#" class="card-link icon-link fw-semibold">Saber más <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="py-3 px-5" style="background-color: #e6e6e6;">
+        <div class="text-center">
+            <h2 class="text-primary">Preguntas frecuentes</h2>
+            <p class="lead fw-normal">Si no encuentras la información que necesitas, consulta a través del consulado más cercano</p>
+        </div>
+        
+        <div class="row p-0 m-0 justify-content-center align-items-stretch">
+            <% for (const element of data) { %>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 py-2">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title border-primary border-bottom pb-1">
+                            <i class="bi bi-patch-question text-primary fs-5"></i> 
+                            <%= element.question %>
+                        </h5>
+                        <p class="card-text">
+                            <%= element.answer %>
+                        </p>
+                        <a href="#<%= element.id %>" class="card-link icon-link fw-semibold">Saber más <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('includes/footer') %>
+    <script src="/js/loader.js"></script>
+</body>
+
+</html>

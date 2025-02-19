@@ -1,0 +1,44 @@
+{
+    "questions": [
+        {
+            "id": 1,
+            "question": "¿Qué puedes hacer si eres mujer que vive violencia de género?",
+            "answer": "Contacta con una línea de ayuda especializada, una organización de apoyo a mujeres que viven violencia de género o a las fuerzas del orden en el país en que te encuentras."
+        },
+        {
+            "id": 2,
+            "question": "¿Qué hacer si soy testigo de violencia?",
+            "answer": "Si presencias un episodio de violencia, donde la vida de una mujer puede estar en riesgo, llama de inmediato al número de emergencia del país en que resides."
+        },
+        {
+            "id": 3,
+            "question": "¿Cómo me comunico con el consulado de Chile?",
+            "answer": "Si eres mujer que vive violencia de género, puedes revisar los datos del consulado de Chile más próximo a tu lugar de residencia o donde te encuentres."
+        },
+        {
+            "id": 4,
+            "question": "¿Cómo puedo saber si hay alguna institución que apoye a mujeres que viven violencia de género en mi ciudad?",
+            "answer": "En Red Local podrás buscar la institución u organización no gubernamental, del país en que te encuentras, que preste apoyo a mujeres que viven violencia de género."
+        },
+        {
+            "id": 5,
+            "question": "¿Qué es la violencia de género?",
+            "answer": "Todo acto que resulta o puede resultar en daño o sufrimiento físico, sexual, psicológico o económico a una persona por razón de su género."
+        },
+        {
+            "id": 6,
+            "question": "¿Cómo identificar la violencia de género?",
+            "answer": "Identificar la violencia de género puede ser difícil, ya que a menudo se oculta y normaliza."
+        },
+        {
+            "id": 7,
+            "question": "¿Por qué ocurre la violencia de género?",
+            "answer": "Las causas de la violencia de género son múltiples, complejas y están relacionadas con factores sociales, culturales y económicos."
+        },
+        {
+            "id": 8,
+            "question": "¿Cuáles son las consecuencias de la violencia de género?",
+            "answer": "La violencia de género tiene graves consecuencias para las mujeres, tanto a corto como a largo plazo."
+        }
+    ]
+}

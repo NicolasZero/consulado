@@ -1,0 +1,9 @@
+.animation {
+    animation: change linear forwards;
+    animation-timeline: view(block 100% auto);
+}
+
+@keyframes change {
+    from { scale: 50%; opacity: 0% }
+    to { scale: 100%; opacity: 100%; }
+}
