@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand m-0 p-0">
-            <img src="/img/logo.png" height="32" alt="JC Painting Contractors"  height="80">
+            <img src="/img/logo.png" height="32" alt="Inamujer Consulado Contigo" height="80">
         </span>
 
         <!-- <button class="btn btn-outline-primary d-md-none d-block">Iniciar sesión<i class="bi bi-box-arrow-in-right"></i></button> -->
@@ -11,28 +11,29 @@
             <i class="bi bi-list"></i>
         </button> -->
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- <div class="row w-100 pt-3 pt-lg-0"> -->
-                <!-- <div class="col-5 col-lg-4 d-flex align-items-center justify-content-end"> -->
-                    <label class="form-label text-nowrap my-auto mx-0 px-3" for="f1">Seleccione una ubicación</label>
-                <!-- </div> -->
-
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <div class="d-none d-md-block flex-fill">
+                <label class="form-label my-auto mx-0 px-3" for="f1">Seleccione una ubicación</label>
                 <div class="px-3 w-100">
-                    <select class="form-select" aria-label="Default select example" name="f1" id="f1">
+                    <select class="form-select text-primary" aria-label="Seleccione una opción" name="f1" id="f1">
                         <option selected>Seleccione una opción</option>
-                        <!-- <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option> -->
                         <%- include('countrySelector') %>
                     </select>
                 </div>
             </div>
+
             <!-- <a href="#" class="btn btn-outline-primary d-none d-lg-block">Iniciar sesión <i class="bi bi-box-arrow-in-right"></i></a> -->
-            <a href="#" class="btn btn-outline-primary">Iniciar sesión <i class="bi bi-box-arrow-in-right"></i></a>
+            <a href="#" class="btn btn-outline-primary ">Iniciar sesión <i class="bi bi-box-arrow-in-right"></i></a>
 
         </div>
     </div>
 </nav>
+<div class="d-block d-md-none text-white py-1" style="background-color: #161616;">
+    <label class="form-label my-auto mx-0 px-3" for="f2">Seleccione una ubicación</label>
+    <div class="px-3 w-100">
+        <select class="form-select text-primary" aria-label="Seleccione una opción" name="f1" id="f2">
+            <option selected>Seleccione una opción</option>
+            <%- include('countrySelector') %>
+        </select>
+    </div>
+</div>
