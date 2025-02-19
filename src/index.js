@@ -4,12 +4,13 @@ import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
 import router from './routes/router.js';
 
-process.loadEnvFile('.env')
+// process.loadEnvFile('.env')
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-const {PORT:port = 3000} = process.env;
+// const {PORT:port = 3000} = process.env;
+const port = 8080
 
 app.set('view engine', 'ejs');
 app.set('views', join(__dirname,'views'));
