@@ -4,7 +4,7 @@ import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
 import router from './routes/router.js';
 
-process.loadEnvFile('.env.example')
+process.loadEnvFile('.env')
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
