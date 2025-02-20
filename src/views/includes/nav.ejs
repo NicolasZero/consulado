@@ -4,52 +4,57 @@
             <img src="/img/logo.png" height="32" alt="Inamujer Consulado Contigo" height="80">
         </span>
 
-        <!-- <button class="btn btn-outline-primary d-md-none d-block">Iniciar sesión<i class="bi bi-box-arrow-in-right"></i></button> -->
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-list"></i>
         </button>
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <!-- <div class="d-none d-md-block flex-fill">
-                <label class="form-label my-auto mx-0 px-3" for="f1">Seleccione una ubicación</label>
-                <div class="px-3 w-100">
-                    <select class="form-select text-primary" aria-label="Seleccione una opción" name="f1" id="f1" onchange="specifyCountry(this.value)">
-                        <option selected>Seleccione una opción</option>
-                        <%- include('countrySelector') %>
-                    </select>
-                </div>
-            </div> -->
-
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link nav-link-hover <% if (page === 'home') { %>active<% } %>" href="/">Inicio</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link nav-link-hover <% if (page === 'cities') { %>active<% } %>" href="/cities">Redes de apoyo</a>
+                    <a class="nav-link nav-link-hover <% if (page === 'cities') { %>active<% } %>" href="/cities">Redes
+                        de apoyo</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link nav-link-hover <% if (page === 'consulates') { %>active<% } %>" href="/consulates">Consulado</a>
+                    <a class="nav-link nav-link-hover <% if (page === 'consulates') { %>active<% } %>"
+                        href="/consulates">Consulado</a>
                 </li>
             </ul>
 
-
-
-            <!-- <a href="#" class="btn btn-outline-primary d-none d-lg-block">Iniciar sesión <i class="bi bi-box-arrow-in-right"></i></a> -->
-            <a href="#" class="btn btn-outline-primary ">Iniciar sesión <i class="bi bi-box-arrow-in-right"></i></a>
-
+            <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Iniciar
+                sesión <i class="bi bi-box-arrow-in-right"></i></a>
         </div>
     </div>
 </nav>
-<!-- <div class="d-block d-md-none text-white py-1" style="background-color: #161616;">
-    <label class="form-label my-auto mx-0 px-3" for="f2">Seleccione una ubicación</label>
-    <div class="px-3 w-100">
-        <select class="form-select text-primary" aria-label="Seleccione una opción" name="f1" id="f2">
-            <option selected>Seleccione una opción</option>
-            <%- include('countrySelector') %>
-        </select>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Iniciar sesión</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form class="">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Usuario</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Contraseña</label>
+                    </div>
+                </form>
+            </div>
+            <div class="d-flex justify-content-center py-3">
+                <button type="button" class="btn btn-primary px-5">Iniciar</button>
+            </div>
+        </div>
     </div>
-</div> -->
+</div>
