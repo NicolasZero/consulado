@@ -1,0 +1,101 @@
+{
+    "country":[
+        {
+            "id":"ve",
+            "name":"Venezuela",
+            "areas":"Anzoátegui, Bolívar, Delta Amacuro, Monagas, Sucre, Amazonas",
+            "cities":[
+                {
+                    "id":1,
+                    "name":"Puerto Ordaz",
+                    "police":[
+                        {
+                            "description":"Teléfono: 911",
+                            "title":""
+                        }
+                    ],
+                    "channels":[
+                        {
+                            "title":"1. Línea 0800-MUJERES:",
+                            "description":"Recibe denuncias sobre violencia de género.\nTeléfono: 0800-685-37-37 2."
+                        },
+                        {
+                            "title":"2. Instituto Nacional de la Mujer (InaMujer):",
+                            "description":"Teléfono: +58 (212) 860-82-10"
+                        }
+                    ],
+                    "social":[
+                        {
+                            "title":"1. Fundación Misión Madres del Barrio:",
+                            "description":"Busca ayudar a las mujeres que viven en pobreza extrema y a sus familia.\nDirección: Avenida Lecuna, Torre Oeste, Parque Central, piso 49. Caracas."
+                        }
+                    ],
+                    "governmental":[]
+                },
+                {
+                    "id":2,
+                    "name":"Caracas",
+                    "police":[
+                        {
+                            "phone":"",
+                            "name":""
+                        }
+                    ],
+                    "channels":[
+                        {
+                            "title":"",
+                            "description":""
+                        }
+                    ],
+                    "social":[
+                        {
+                            "title":"",
+                            "description":""
+                        }
+                    ],
+                    "governmental":[
+                        {
+                            "title":"",
+                            "description":""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id":"mx",
+            "name":"México",
+            "areas":"",
+            "cities":[
+                {
+                    "id":3,
+                    "name":"Ciudad de México",
+                    "police":[
+                        {
+                            "phone":"",
+                            "name":""
+                        }
+                    ],
+                    "channels":[
+                        {
+                            "title":"",
+                            "description":""
+                        }
+                    ],
+                    "social":[
+                        {
+                            "title":"",
+                            "description":""
+                        }
+                    ],
+                    "governmental":[
+                        {
+                            "title":"",
+                            "description":""
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

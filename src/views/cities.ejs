@@ -14,17 +14,21 @@
     <div class="loader-page"></div>
     <%- include('includes/nav') %>
 
-    <div class="pt-2 pb-3">
-        <label class="form-label my-auto mx-0 px-3" for="country">Seleccione un país</label>
-        <div class="px-3 w-100">
-            <select class="form-select text-primary border-primary" aria-label="Seleccione una opción" name="country" id="country" onchange="specifyCountry(this.value)">
-                <option value="">Seleccione una opción</option>
+    <div class="container-fluid d-flex justify-content-between align-items-center bg-primary py-2">
+        <!-- <span class="btn btn-primary"><i class="bi bi-arrow-left"></i> Regresar</span> -->
+        <label class="form-label text-white m-0 d-none d-md-block" for="country">Ubicación</label>
+        <div class="flex-fill px-3">
+            <select class="form-select text-primary border-primary" aria-label="Seleccione una opción" autocomplete="off"
+                name="country" id="country" onchange="specifyCountry(this.value)">
+                <option selected value="">Seleccione un país</option>
                 <%- include('includes/countrySelector') %>
             </select>
         </div>
+
+        <a href="/consulates/<%=country%>" class="btn btn-primary text-nowrap">Consulados<i class="bi bi-arrow-right"></i></a>
     </div>
 
-    <div class="container-fluid px-2 px-md-5 py-3"  style="background-color: #e6e6e6;">
+    <div class="container-fluid px-2 px-md-5 py-3" style="background-color: #e6e6e6;">
         <div class="text-center">
             <h1 class="display-3 text-primary">Ciudades con redes de apoyos</h1>
             <p class="lead fw-normal">
@@ -33,7 +37,7 @@
                 <% }else if (data.length === 0 && country !== "") { %>
                     <i class="bi bi-exclamation-triangle text-primary"></i> No se encontraron ciudades con redes de apoyo en el país seleccionado <i class="bi bi-exclamation-triangle text-primary"></i>
                 <% }else{ %>
-                    <i class="bi bi-info-square text-primary"></i> Debe de seleccionar un país para poder ver las ciudades con redes locales disponible <i class="bi bi-info-square text-primary"></i>
+                    <i class="bi bi-info-square text-primary"></i> Debe de seleccionar un país para poder ver las ciudades con redes de apoyo disponible <i class="bi bi-info-square text-primary"></i>
                 <% } %>
             </p>
         </div>
@@ -45,8 +49,8 @@
                     <div class="card-body text-center">
                         <i class="text-primary display-1 bi bi-buildings"></i>
                         <h5 class="card-title"><%= element.name %></h5>
-                        <a href="#<%=element.id%>" class="card-link icon-link fw-semibold">
-                            Ver <i class="bi bi-arrow-right"></i>
+                        <a href="/support_networks/<%=`${country}/${element.id}`%>" class="btn btn-outline-primary fw-semibold">
+                            Ver más <i class="bi bi-search"></i>
                         </a>
                     </div>
                 </div>
@@ -56,13 +60,13 @@
     </div>
 
     <%- include('includes/footer') %>
+    <script src="/js/loader.js"></script>
     <script>
         document.getElementById("country").value = "<%= country %>"
         function specifyCountry(val) {
             window.location.href = `/cities/${val}`
         }
     </script>
-    <script src="/js/loader.js"></script>
 </body>
 
 </html>

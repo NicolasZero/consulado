@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <%- include('includes/head') %>
+</head>
+
+<body>
+    <div class="loader-page"></div>
+    <%- include('includes/nav') %>
+
+    <div class="container-fluid d-flex justify-content-between align-items-center bg-primary py-2">
+        <a href="/cities/<%= country %>" class="btn btn-primary text-nowrap"><i class="bi bi-arrow-left"></i> Regresar</a>
+
+        <div class="flex-fill px-3">
+            <select class="form-select text-primary border-primary" aria-label="Seleccione una opción" autocomplete="off"
+                name="country" id="country" onchange="specifyCountry(this.value)">
+                <option value="">Seleccione un país</option>
+                <%- include('includes/countrySelector') %>
+            </select>
+        </div>
+
+        <!-- <a href="/consulates/<%= country%>" class="btn btn-primary">
+            Consulados <i class="bi bi-arrow-right"></i>
+        </a> -->
+    </div>
+
+
+    <div class="container-fluid px-2 px-sm-5">
+        <div class="row">
+            <div class="col-12 col-md-8 px-3 pt-3 pb-4">
+                <h1 class="text-primary display-4 fw-normal">Redes de apoyo</h1>
+                <p class="lead fw-normal">Estados,Estados,Estados,Estados</p>
+
+                <div class="accordion" id="accordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panel-1" aria-expanded="true"
+                                aria-controls="panel-1">
+                                <span class="h4 m-0">
+                                    Policía
+                                </span>
+                            </button>
+                        </h2>
+                        <div id="panel-1" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci saepe consequatur sit, nostrum ex enim, provident aut veniam hic nobis pariatur totam? Quos omnis possimus rem. Veniam soluta maxime accusantium?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panel-2" aria-expanded="false"
+                                aria-controls="panel-2">
+                                <span class="h4 m-0">
+                                    Canales para denunciar
+                                </span>
+                            </button>
+                        </h2>
+                        <div id="panel-2" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci saepe consequatur sit, nostrum ex enim, provident aut veniam hic nobis pariatur totam? Quos omnis possimus rem. Veniam soluta maxime accusantium?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panel-3" aria-expanded="false"
+                                aria-controls="panel-3">
+                                <span class="h4 m-0">
+                                    Redes gubernamentales
+                                </span>
+                            </button>
+                        </h2>
+                        <div id="panel-3" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci saepe consequatur sit, nostrum ex enim, provident aut veniam hic nobis pariatur totam? Quos omnis possimus rem. Veniam soluta maxime accusantium?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panel-4" aria-expanded="false"
+                                aria-controls="panel-4">
+                                <span class="h4 m-0">
+                                    Redes de apoyo social
+                                </span>
+                            </button>
+                        </h2>
+                        <div id="panel-4" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci saepe consequatur sit, nostrum ex enim, provident aut veniam hic nobis pariatur totam? Quos omnis possimus rem. Veniam soluta maxime accusantium?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4 p-0" style="background-color: #f3cfe4;">
+                <div class="rounded p-3">
+                    <h3 class="p-2 text-primary fw-normal">Otras redes de apoyo</h3>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action bg-primary text-white">
+                            Opcion numero 1
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action text-primary">Opcion numero 2</a>
+                        <a href="#" class="list-group-item list-group-item-action text-primary">Opcion numero 3</a>
+                        <a href="#" class="list-group-item list-group-item-action text-primary">Opcion numero 4</a>
+                        <a class="list-group-item list-group-item-action disabled text-primary">Opcion numero 5</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <%- include('includes/footer') %>
+    <script src="/js/loader.js"></script>
+
+    <script>
+        document.getElementById("country").value = "<%= country %>"
+        function specifyCountry(val) {
+            window.location.href = `/cities/${val}`
+        }
+    </script>
+</body>
+
+</html>
