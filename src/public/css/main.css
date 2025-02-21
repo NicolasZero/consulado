@@ -53,6 +53,23 @@ textarea{
     margin-bottom: 16px;
 }
 
+.ws-btn:hover, .ws-btn:active{
+    transform: scale(1.2);
+    transition: all 0.3s ease;
+}
+
+.chat-btn{
+    position: fixed; 
+    bottom: 8px; 
+    right: 8px;
+}
+
+.chat-btn:hover, .chat-btn:active{
+    transform: scale(1.2);
+    transition: all 0.3s ease;
+}
+
+/* Salto de linea */
 .w-space{
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;

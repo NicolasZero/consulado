@@ -121,52 +121,8 @@
         </div>
     </div>
 
-    <p class="display-6 text-center text-primary">Chat en progreso </p>
-
-    <div class="py-3" style="background-color: #f3cfe4;">
-        <div class="container d-flex flex-column py-3" style="overflow-y: auto; background-color: #e7e7e7">
-            <div class="msg my-3 received align-self-start">
-                <div class="bg-primary text-white p-3 rounded">
-                    <h6 class="p-0 m-0">Autor:</h6>
-                    <p class="p-0 m-0">mensaje:</p>
-                    <span class="quote">Hora:</span>
-                </div>
-            </div>
-
-            <div class="msg sent align-self-end">
-                <div class="bg-secondary text-white p-3 rounded">
-                    <h6 class="p-0 m-0">Autor:</h6>
-                    <p class="p-0 m-0">mensaje: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente natus iste non sint cumque numquam! Ut, quaerat omnis amet expedita ex natus? Quasi sunt quaerat debitis ex deleniti dolores voluptas?</p>
-                    <span class="quote">Hora:</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="input-group my-3 px-5">
-            <span class="input-group-text" id="basic-addon1"><i class="bi bi-send-fill text-secondary"></i></span>
-            <input type="text" class="form-control" placeholder="mensage">
-        </div>
-    </div>
-
     <%- include('includes/footer') %>
     <script src="/js/loader.js"></script>
-    <script>
-        let newValue = ''
-        const redLocal = (value) => {
-            console.log('old value',newValue)
-            newValue = value
-            console.log('new value',value)
-            
-        }
-
-        const specifyCountry = (value) => {
-            // console.log('old value',newValue)
-            newValue = value
-            // console.log('new value',value)
-            console.log(value);
-            
-        }
-    </script>
 </body>
 
 </html>

@@ -9,6 +9,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 //     res.render('home', {title: 'Consulado contigo',page:"home"})
 // }
 
+const chat = (req, res) => {
+    res.render('chat', {title: 'Consulado contigo',page:"chat"})
+}
+
 const home = (req, res) => {
     const pathRouter = join(__dirname,"..","data","questions.json")
     
@@ -114,4 +118,4 @@ const supportNetwork = (req, res) => {
     })
 }
 
-export default {home,cities,consulates,supportNetwork} 
+export default {home,cities,consulates,supportNetwork,chat} 

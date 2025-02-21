@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <%- include('includes/head') %>
+</head>
+
+<body>
+    <div class="loader-page"></div>
+    <%- include('includes/nav') %>
+
+    <div>
+        <p class="display-6 text-center text-primary py-3 m-0">Chat en progreso </p>
+    </div>
+    
+        <div class="" style="background-color: #ffe7f5;">
+            <div class="container rounded-bottom pb-3 bg-body-tertiary">
+                <div class="d-flex flex-column py-3" style="overflow-y: auto;">
+                    <!-- mensaje recibido -->
+                    <div class="enviado pe-5 py-3 align-self-start">
+                        <p class="m-0 text-body-secondary px-3">Operador</p>
+                        <div class="bg-secondary text-white p-3 rounded-5">
+                            lorem ipsum dolor
+                        </div>
+                    </div>
+
+                    <!-- mensaje enviado -->
+                    <div class="recivido ps-5 py-3 align-self-end">
+                        <p class="m-0 text-end text-body-secondary px-3">Yo</p>
+                        <div class="bg- text-white p-3 rounded-5" style="background-color: #f36dbb;">
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente natus iste non sint
+                            cumque numquam! Ut, quaerat omnis amet expedita ex natus? Quasi sunt quaerat debitis ex
+                            deleniti dolores voluptas?
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <form>
+                        <span class="input-group-text" id="basic-addon1"><i
+                                class="bi bi-send-fill text-secondary"></i></span>
+                        <input type="text" class="form-control" placeholder="Mensaje" id="mensaje">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    <%- include('includes/footer') %>
+    <script>
+
+    </script>
+    <script src="/js/loader.js"></script>
+</body>
+
+</html>
