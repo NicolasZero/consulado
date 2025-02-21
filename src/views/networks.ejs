@@ -25,80 +25,80 @@
             </select>
         </div>
 
-        <!-- <a href="/consulates/<%= country%>" class="btn btn-primary">
-            Consulados <i class="bi bi-arrow-right"></i>
-        </a> -->
+        <%// console.log(cities) %>
     </div>
 
 
     <div class="container-fluid px-2 px-sm-5">
         <div class="row">
             <div class="col-12 col-md-8 px-3 pt-3 pb-4">
-                <h1 class="text-primary display-4 fw-normal">Redes de apoyo</h1>
-                <p class="lead fw-normal">Estados,Estados,Estados,Estados</p>
+                <h1 class="text-primary display-4 fw-normal">Redes de apoyo de <%= data.name %></h1>
+                <p class="lead fw-normal"><%= data.area %></p>
 
                 <div class="accordion" id="accordion">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button " type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panel-1" aria-expanded="true"
-                                aria-controls="panel-1">
-                                <span class="h4 m-0">
-                                    Policía
-                                </span>
+                            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#panel-1">
+                                <span class="h4 m-0">Policía</span>
                             </button>
                         </h2>
                         <div id="panel-1" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci saepe consequatur sit, nostrum ex enim, provident aut veniam hic nobis pariatur totam? Quos omnis possimus rem. Veniam soluta maxime accusantium?
+                               <%= data.police %>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panel-2" aria-expanded="false"
-                                aria-controls="panel-2">
-                                <span class="h4 m-0">
-                                    Canales para denunciar
-                                </span>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panel-2">
+                                <span class="h4 m-0">Canales para denunciar</span>
                             </button>
                         </h2>
                         <div id="panel-2" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci saepe consequatur sit, nostrum ex enim, provident aut veniam hic nobis pariatur totam? Quos omnis possimus rem. Veniam soluta maxime accusantium?
+                                <% for (const e of data.channels ) { %>
+                                    <div>
+                                        <h5><%= e.title %></h5>
+                                        <p class="w-space m-0"><%= e.description %></p>
+                                    </div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
+                    <% if (data.governmental.length > 0) { %>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panel-3" aria-expanded="false"
-                                aria-controls="panel-3">
-                                <span class="h4 m-0">
-                                    Redes gubernamentales
-                                </span>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panel-3">
+                                <span class="h4 m-0">Redes gubernamentales</span>
                             </button>
                         </h2>
                         <div id="panel-3" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci saepe consequatur sit, nostrum ex enim, provident aut veniam hic nobis pariatur totam? Quos omnis possimus rem. Veniam soluta maxime accusantium?
+                                <% for (const e of data.governmental ) { %>
+                                    <div>
+                                        <h5><%= e.title %></h5>
+                                        <p class="w-space m-0"><%= e.description %></p>
+                                    </div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
+                    <% } %>
+
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panel-4" aria-expanded="false"
-                                aria-controls="panel-4">
-                                <span class="h4 m-0">
-                                    Redes de apoyo social
-                                </span>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panel-4">
+                                <span class="h4 m-0">Redes de apoyo social</span>
                             </button>
                         </h2>
                         <div id="panel-4" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci saepe consequatur sit, nostrum ex enim, provident aut veniam hic nobis pariatur totam? Quos omnis possimus rem. Veniam soluta maxime accusantium?
+                                <% for (const e of data.social ) { %>
+                                    <div>
+                                        <h5><%= e.title %></h5>
+                                        <p class="w-space m-0"><%= e.description %></p>
+                                    </div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
@@ -109,13 +109,13 @@
                 <div class="rounded p-3">
                     <h3 class="p-2 text-primary fw-normal">Otras redes de apoyo</h3>
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action bg-primary text-white">
-                            Opcion numero 1
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action text-primary">Opcion numero 2</a>
-                        <a href="#" class="list-group-item list-group-item-action text-primary">Opcion numero 3</a>
-                        <a href="#" class="list-group-item list-group-item-action text-primary">Opcion numero 4</a>
-                        <a class="list-group-item list-group-item-action disabled text-primary">Opcion numero 5</a>
+                        <span class="list-group-item list-group-item-action bg-primary text-white">
+                            <%= data.name %>
+                        </span>
+                        <% for (const e of data.other) { %>
+                            <a href="/support_networks/ve/<%= e.id %>" class="list-group-item list-group-item-action text-primary"><%= e.name %></a>
+                        <% } %>
+
                     </div>
                 </div>
 

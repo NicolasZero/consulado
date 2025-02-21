@@ -1,0 +1,27 @@
+.msg{
+    position: relative;
+}
+
+.msg.received::after {
+    content: '';
+    width: 0; 
+    height: 0;
+    border-left: 0px solid transparent; 
+    border-right: 12px solid transparent; 
+    border-top: 7px solid  var(--bs-primary);
+    position: absolute;
+    /* bottom: -70px; */
+    /* left: 0; */
+}
+
+.msg.sent::after {
+    content: '';
+    width: 0; 
+    height: 0;
+    border-left: 12px solid transparent; 
+    border-right: 0px solid transparent; 
+    border-top: 7px solid  var(--bs-secondary);
+    position: absolute;
+    /* bottom: -70px; */
+    right: 0;
+}

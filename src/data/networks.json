@@ -1,97 +1,128 @@
 {
-    "country":[
+    "country": [
         {
-            "id":"ve",
-            "name":"Venezuela",
-            "areas":"Anzoátegui, Bolívar, Delta Amacuro, Monagas, Sucre, Amazonas",
-            "cities":[
+            "id": "ve",
+            "name": "Venezuela",
+            "cities": [
                 {
-                    "id":1,
-                    "name":"Puerto Ordaz",
-                    "police":[
+                    "id": 1,
+                    "name": "Puerto Ordaz",
+                    "other": [
                         {
-                            "description":"Teléfono: 911",
-                            "title":""
+                            "name":"Caracas",
+                            "id":"2"
                         }
                     ],
-                    "channels":[
+                    "area": "Anzoátegui, Bolívar, Delta Amacuro, Monagas, Sucre, Amazonas",
+                    "police": "Teléfono: 911",
+                    "channels": [
                         {
-                            "title":"1. Línea 0800-MUJERES:",
-                            "description":"Recibe denuncias sobre violencia de género.\nTeléfono: 0800-685-37-37 2."
+                            "title": "1. Línea 0800-MUJERES:",
+                            "description": "Recibe denuncias sobre violencia de género.\nTeléfono: 0800-685-37-37 2."
                         },
                         {
-                            "title":"2. Instituto Nacional de la Mujer (InaMujer):",
-                            "description":"Teléfono: +58 (212) 860-82-10"
+                            "title": "2. Instituto Nacional de la Mujer (InaMujer):",
+                            "description": "Teléfono: +58 (212) 860-82-10"
                         }
                     ],
-                    "social":[
+                    "social": [
                         {
-                            "title":"1. Fundación Misión Madres del Barrio:",
-                            "description":"Busca ayudar a las mujeres que viven en pobreza extrema y a sus familia.\nDirección: Avenida Lecuna, Torre Oeste, Parque Central, piso 49. Caracas."
+                            "title": "1. Fundación Misión Madres del Barrio:",
+                            "description": "Busca ayudar a las mujeres que viven en pobreza extrema y a sus familia.\nDirección: Avenida Lecuna, Torre Oeste, Parque Central, piso 49. Caracas."
                         }
                     ],
-                    "governmental":[]
+                    "governmental": []
                 },
                 {
-                    "id":2,
-                    "name":"Caracas",
-                    "police":[
+                    "id": 2,
+                    "name": "Caracas",
+                    "other": [
                         {
-                            "phone":"",
-                            "name":""
+                            "name":"Puerto Ordaz",
+                            "id":"1"
                         }
                     ],
-                    "channels":[
+                    "area": "Distrito Capital, Apure, Aragua, Barinas, Carabobo, Cojedes, Falcón, La Guaira, Guárico, Lara, Mérida, Miranda, Nueva Esparta, Portuguesa, Táchira, Trujillo, Yaracuy, Zulia",
+                    "police": "Teléfono: 911",
+                    "channels": [
                         {
-                            "title":"",
-                            "description":""
+                            "title": "Línea 0800-MUJERES:",
+                            "description": "Recibe denuncias sobre violencia de género.\nTeléfono: 0800-685-37-37"
+                        },
+                        {
+                            "title": "Instituto Nacional de la Mujer (InaMujer):",
+                            "description": "Teléfono: +58 (212) 860-82-10"
                         }
                     ],
-                    "social":[
+                    "social": [
                         {
-                            "title":"",
-                            "description":""
+                            "title": "Fundación Misión Madres del Barrio:",
+                            "description": "Es una estrategia del gobierno bolivariano de Venezuela que busca ayudar a las mujeres que viven en pobreza extrema y a sus familia.\nDirección: Avenida Lecuna, Torre Oeste, Parque Central, piso 49. Caracas."
                         }
                     ],
-                    "governmental":[
+                    "governmental": [
                         {
-                            "title":"",
-                            "description":""
+                            "title": "0800-MUJERES:",
+                            "description": "Es una línea de atención telefónica gratuita, que brinda información, orientación, asesoría legal e intervención del estado en situación de violencia machista.\nTeléfono: 0800"
                         }
                     ]
                 }
             ]
         },
         {
-            "id":"mx",
-            "name":"México",
-            "areas":"",
-            "cities":[
+            "id": "mx",
+            "name": "México",
+            "cities": [
                 {
-                    "id":3,
-                    "name":"Ciudad de México",
-                    "police":[
+                    "id": 3,
+                    "name": "Ciudad de México",
+                    "other":[],
+                    "areas": "",
+                    "police": "Teléfono: 911",
+                    "channels": [
                         {
-                            "phone":"",
-                            "name":""
+                            "title": "1. Línea sin Violencia:",
+                            "description": "Servicio gratuito y confidencial que brinda atención las 24 horas del día, los 365 días del año. Ofrece asesoría jurídica, psicológica y de trabajo social a mujeres en situación de violencia.\nTeléfono: 800 108 4053"
+                        },
+                        {
+                            "title": "2. Centro de justicia para las mujeres:",
+                            "description": "Espacios que concentran servicios especializados e interinstitucionales para atender a mujeres y niñas víctimas de violencia familiar y de género.\nTeléfono: (55) 5346 8394"
                         }
                     ],
-                    "channels":[
+                    "social": [
                         {
-                            "title":"",
-                            "description":""
+                            "title": "1. Red Nacional de Refugios (RNR):",
+                            "description": "Agrupa  varios refugios en todo México para mujeres y niños que huyen de situaciones de violencia extrema. Ofrecen alojamiento seguro, apoyo psicológico y asesoría legal.\nTeléfono: 800 822 4460\nSitio web: https://www.rednacionalderefugios.org/"
+                        },
+                        {
+                            "title": "2. Centro Nacional de Equidad de Género y Salud Reproductiva:",
+                            "description": "Ofrece servicios de salud, apoyo psicológico y jurídico a mujeres víctimas de violencia de género, en colaboración con hospitales y centros de salud en todo el país."
+                        },
+                        {
+                            "title": "3. Fundación Origen:",
+                            "description": "Proporciona apoyo psicológico, legal y económico a mujeres víctimas de violencia de género a través de su Línea de Ayuda y centros de atención.\nTeléfono:  800 015 1617\nSitio web: https://www.instagram.com/fundacionorigen/?hl=es"
+                        },
+                        {
+                            "title": "4. GIRE (Grupo de Información en Reproducción Elegida):",
+                            "description": "Trabaja en la defensa de los derechos reproductivos y de género en México, proporcionando apoyo a mujeres que enfrentan violencia relacionada con sus derechos sexuales y reproductivos.\nTeléfono: +52 (55) 5658 6654\nSitio web: https://gire.org.mx/"
+                        },
+                        {
+                            "title": "5. Fundación para la Justicia y el Estado Democrático de Derecho:",
+                            "description": "Ofrece apoyo legal a mujeres víctimas de violencia y a familiares de personas desaparecidas, con un enfoque en la lucha contra la impunidad."
+                        },
+                        {
+                            "title": "6. Católicas por el Derecho a Decidir:",
+                            "description": "Proporciona asesoría y apoyo a mujeres en situaciones de violencia de género, especialmente relacionadas con derechos reproductivos.\nTeléfono: +52 (55) 5554 3054\nSitio web: https://catolicasmexico.org/"
+                        },
+                        {
+                            "title": "7. Nuestras Hijas de Regreso a Casa A.C.:",
+                            "description": "ONG dedicada a la búsqueda de justicia para mujeres víctimas de feminicidio y desaparición, principalmente en Ciudad Juárez.\nTeléfono: +52 (656) 611 2719\nSitio web"
                         }
                     ],
-                    "social":[
+                    "governmental": [
                         {
-                            "title":"",
-                            "description":""
-                        }
-                    ],
-                    "governmental":[
-                        {
-                            "title":"",
-                            "description":""
+                            "title": "Secretaría de Seguridad Ciudadana de la Ciudad de México (SSC-CDMX):",
+                            "description": "Cuenta con la Unidad Especializada de Género, que brinda apoyo a las mujeres que sufren violencia y ofrece orientación psicológica y jurídica. También investigan casos de violencia cometida por el personal policial.\nTeléfono: +52 55 5242 5100,\nExt. 4970\nWhatsApp: +52 55 4832 3115\nCorreo electrónico: unidaddegenero@ssc.cdmx.gob.mx"
                         }
                     ]
                 }
