@@ -1,3 +1,11 @@
+/* panel de mensajes */
+.msg-panel {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    height: 75vh;
+}
+
+/* Mensajes */
 .msg {
     position: relative;
     border-radius: 2rem;
@@ -18,33 +26,39 @@
     margin-right: 3rem;
 }
 
-.msg-other::before {
+/* .msg-other::before {
     content: 'Operador';
     color: #313131;
-    /* background-color: #dbd4ff; */
-    /* padding: .5rem; */
-    /* border-radius: 1rem; */
     position: absolute;
     top: -1.5rem;
     left: 1rem;
-}
+} */
 
 .msg-own {
-    /* background-color: #dbd4ff; */
     background-color: var(--bs-primary);
-    /* color: #313131; */
     color: #fff;
     align-self: end;
     margin-left: 3rem;
 }
 
-.msg-own::before {
+/* .msg-own::before {
     content: 'Yo';
     color: #313131;
-    /* background-color: #dbd4ff; */
-    /* padding: .5rem; */
-    /* border-radius: 1rem; */
     position: absolute;
     top: -1.5rem;
     right: 1rem;
+} */
+
+.msg span{
+    color: #313131;
+    position: absolute;
+    top: -1.5rem;
+}
+
+.msg-own span{
+    right: 1rem;
+}
+
+.msg-other span{
+    left: 1rem;
 }

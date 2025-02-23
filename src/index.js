@@ -19,8 +19,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on('chat message', (msg) => {
-        console.log('message: ' + msg)
-        io.emit('chat message', msg)
+        const username = socket.handshake.auth.username ?? 'anonymous'
+        console.log({msg,username})
+        io.emit('chat message', {msg,username})
     })
 })
 

@@ -13,16 +13,29 @@
 
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
-        const socket = io();
+        const username = 'Anonymous'
+        const socket = io(
+            {
+                auth:{
+                    username: username
+                }
+            }
+        );
 
         const form = document.getElementById('form')
         const chat = document.getElementById('chat-body')
         
         socket.on('chat message', (msg) => {
             const div = document.createElement('div')
-            div.classList.add('msg', 'msg-own')
-            div.innerHTML = `<p>${msg}</p>`
+            if (msg.username === username) {
+                div.classList.add('msg', 'msg-own')
+                div.innerHTML = `<span>Yo</span><p>${msg.msg}</p>`
+            }else{
+                div.classList.add('msg', 'msg-other')
+                div.innerHTML = `<span>${msg.username}</span><p>${msg.msg}</p>`
+            }
             chat.appendChild(div)
+            chat.scrollTop = chat.scrollHeight
         })
 
         form.addEventListener('submit', (e) => {
@@ -49,42 +62,17 @@
             </div>
 
             <div class="text-center">
-                <p>Pruebe escribir un mensaje <br>Nota: Los mensajes no son guardados</p>
+                <p>Pruebe escribir un mensaje <br><b>Nota:</b> Los mensajes no son guardados</p>
             </div>
 
-            <div id="chat-body" class="d-flex flex-column p-3 border-top border-bottom" style="overflow-y: auto; height: 80vh;">
-                <!-- <div class="msg msg-own">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente natus iste non sint
-                    cumque numquam! Ut, quaerat omnis amet expedita ex natus? Quasi sunt quaerat debitis ex
-                    deleniti dolores voluptas?
-                </div>
-
-                <div class="msg msg-other">
-                    lorem ipsum dolor
-                </div>
-
-                <div class="msg msg-other">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente natus iste non sint
-                    cumque numquam! Ut, quaerat omnis amet expedita ex natus? Quasi sunt quaerat debitis ex
-                    deleniti dolores voluptas?
-                </div>
-
-                <div class="msg msg-own">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente natus iste non sint
-                    cumque numquam! Ut, quaerat omnis amet expedita ex natus? Quasi sunt quaerat debitis ex
-                    deleniti dolores voluptas?
-                </div> -->
+            <div id="chat-body" class="msg-panel d-flex flex-column p-3 border-top border-bottom">
             </div>
-
-            <!-- <hr class="m-0"> -->
 
             <form class="input-group p-3" id="form">
-                <!-- <div class=""> -->
-                    <button class="input-group-text" id="basic-addon1">
-                        <i class="bi bi-send-fill text-secondary"></i>
-                    </button>
-                    <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
-                <!-- </div> -->
+                <button class="input-group-text" id="basic-addon1">
+                    <i class="bi bi-send-fill text-secondary"></i>
+                </button>
+                <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
             </form>
         </div>
     </div>
