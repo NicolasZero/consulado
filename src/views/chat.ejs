@@ -8,52 +8,88 @@
         <%= title %>
     </title>
     <%- include('includes/head') %>
+    <link rel="stylesheet" href="/css/msg.css">
+
+
+    <script type="module">
+        import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
+        const socket = io();
+
+        const form = document.getElementById('form')
+        const chat = document.getElementById('chat-body')
+        
+        socket.on('chat message', (msg) => {
+            const div = document.createElement('div')
+            div.classList.add('msg', 'msg-own')
+            div.innerHTML = `<p>${msg}</p>`
+            chat.appendChild(div)
+        })
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const msg = document.getElementById('msg')
+            if (msg.value) {
+                socket.emit('chat message', msg.value)
+                msg.value = ''
+            }
+        })
+    </script>
 </head>
 
 <body>
     <div class="loader-page"></div>
     <%- include('includes/nav') %>
 
-    <div>
-        <p class="display-6 text-center text-primary py-3 m-0">Chat en progreso </p>
-    </div>
-    
-        <div class="" style="background-color: #ffe7f5;">
-            <div class="container rounded-bottom pb-3 bg-body-tertiary">
-                <div class="d-flex flex-column py-3" style="overflow-y: auto;">
-                    <!-- mensaje recibido -->
-                    <div class="enviado pe-5 py-3 align-self-start">
-                        <p class="m-0 text-body-secondary px-3">Operador</p>
-                        <div class="bg-secondary text-white p-3 rounded-5">
-                            lorem ipsum dolor
-                        </div>
-                    </div>
+    <div class="p-0 row m-0 p-0 justify-content-center" style="background-color: #ffe7f5;">
 
-                    <!-- mensaje enviado -->
-                    <div class="recivido ps-5 py-3 align-self-end">
-                        <p class="m-0 text-end text-body-secondary px-3">Yo</p>
-                        <div class="bg- text-white p-3 rounded-5" style="background-color: #f36dbb;">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente natus iste non sint
-                            cumque numquam! Ut, quaerat omnis amet expedita ex natus? Quasi sunt quaerat debitis ex
-                            deleniti dolores voluptas?
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <form>
-                        <span class="input-group-text" id="basic-addon1"><i
-                                class="bi bi-send-fill text-secondary"></i></span>
-                        <input type="text" class="form-control" placeholder="Mensaje" id="mensaje">
-                    </form>
-                </div>
+        <div class="col-12 col-md-10 col-lg-8 p-0 bg-body-tertiary">
+
+            <div class="bg-primary p-3 text-center">
+                <h4 class="fs-3 fw-light m-0 text-white">Atención en vivo</h4>
             </div>
-        </div>
 
+            <div class="text-center">
+                <p>Pruebe escribir un mensaje <br>Nota: Los mensajes no son guardados</p>
+            </div>
+
+            <div id="chat-body" class="d-flex flex-column p-3 border-top border-bottom" style="overflow-y: auto; height: 80vh;">
+                <!-- <div class="msg msg-own">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente natus iste non sint
+                    cumque numquam! Ut, quaerat omnis amet expedita ex natus? Quasi sunt quaerat debitis ex
+                    deleniti dolores voluptas?
+                </div>
+
+                <div class="msg msg-other">
+                    lorem ipsum dolor
+                </div>
+
+                <div class="msg msg-other">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente natus iste non sint
+                    cumque numquam! Ut, quaerat omnis amet expedita ex natus? Quasi sunt quaerat debitis ex
+                    deleniti dolores voluptas?
+                </div>
+
+                <div class="msg msg-own">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente natus iste non sint
+                    cumque numquam! Ut, quaerat omnis amet expedita ex natus? Quasi sunt quaerat debitis ex
+                    deleniti dolores voluptas?
+                </div> -->
+            </div>
+
+            <!-- <hr class="m-0"> -->
+
+            <form class="input-group p-3" id="form">
+                <!-- <div class=""> -->
+                    <button class="input-group-text" id="basic-addon1">
+                        <i class="bi bi-send-fill text-secondary"></i>
+                    </button>
+                    <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
+                <!-- </div> -->
+            </form>
+        </div>
+    </div>
 
     <%- include('includes/footer') %>
-    <script>
-
-    </script>
     <script src="/js/loader.js"></script>
 </body>
 

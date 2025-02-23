@@ -1,27 +1,50 @@
-.msg{
+.msg {
     position: relative;
+    border-radius: 2rem;
+    padding: 1rem;
+    margin: 1rem 0;
 }
 
-.msg.received::after {
-    content: '';
-    width: 0; 
-    height: 0;
-    border-left: 0px solid transparent; 
-    border-right: 12px solid transparent; 
-    border-top: 7px solid  var(--bs-primary);
-    position: absolute;
-    /* bottom: -70px; */
-    /* left: 0; */
+.msg p{
+    margin: 0;
 }
 
-.msg.sent::after {
-    content: '';
-    width: 0; 
-    height: 0;
-    border-left: 12px solid transparent; 
-    border-right: 0px solid transparent; 
-    border-top: 7px solid  var(--bs-secondary);
+.msg-other {
+    /* background-color: #c0c7cc; */
+    background-color: var(--bs-secondary);
+    color: #fff;
+    /* color: #313131; */
+    align-self: start;
+    margin-right: 3rem;
+}
+
+.msg-other::before {
+    content: 'Operador';
+    color: #313131;
+    /* background-color: #dbd4ff; */
+    /* padding: .5rem; */
+    /* border-radius: 1rem; */
     position: absolute;
-    /* bottom: -70px; */
-    right: 0;
+    top: -1.5rem;
+    left: 1rem;
+}
+
+.msg-own {
+    /* background-color: #dbd4ff; */
+    background-color: var(--bs-primary);
+    /* color: #313131; */
+    color: #fff;
+    align-self: end;
+    margin-left: 3rem;
+}
+
+.msg-own::before {
+    content: 'Yo';
+    color: #313131;
+    /* background-color: #dbd4ff; */
+    /* padding: .5rem; */
+    /* border-radius: 1rem; */
+    position: absolute;
+    top: -1.5rem;
+    right: 1rem;
 }

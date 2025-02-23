@@ -13,6 +13,14 @@ const chat = (req, res) => {
     res.render('chat', {title: 'Consulado contigo',page:"chat"})
 }
 
+const login = (req, res) => {
+    res.render('login', {title: 'Consulado contigo',page:"login"})
+}
+
+const operator = (req, res) => {
+    res.render('operator', {title: 'Consulado contigo',page:"operator"})
+}
+
 const home = (req, res) => {
     const pathRouter = join(__dirname,"..","data","questions.json")
     
@@ -118,4 +126,12 @@ const supportNetwork = (req, res) => {
     })
 }
 
-export default {home,cities,consulates,supportNetwork,chat} 
+export default {
+    home,
+    cities,
+    consulates,
+    supportNetwork,
+    chat,
+    operator,
+    login
+} 

@@ -1,0 +1,36 @@
+{
+    "chat":[
+        {
+            "id": 1,
+            "name": "chat 1",
+            "messages": [
+                {
+                    "id": 1,
+                    "user": "user 1",
+                    "message": "mensaje 1"
+                },
+                {
+                    "id": 2,
+                    "user": "user 2",
+                    "message": "mensaje 2"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "chat 2",
+            "messages": [
+                {
+                    "id": 1,
+                    "user": "user 1",
+                    "message": "mensaje 1"
+                },
+                {
+                    "id": 2,
+                    "user": "user 2",
+                    "message": "mensaje 2"
+                }
+            ]
+        }
+    ]
+}

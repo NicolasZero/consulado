@@ -62,6 +62,7 @@ textarea{
     position: fixed; 
     bottom: 8px; 
     right: 8px;
+    z-index: 1030;
 }
 
 .chat-btn:hover, .chat-btn:active{

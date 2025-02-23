@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "node --watch src/index.js"
   },
   "repository": {
     "type": "git",
@@ -13,14 +13,12 @@
   "author": "NicolasZero",
   "license": "ISC",
   "type": "module",
-  "bugs": {
-    "url": "https://github.com/NicolasZero/consulado/issues"
-  },
   "homepage": "https://github.com/NicolasZero/consulado#readme",
   "description": "",
   "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^4.21.2",
-    "fs": "^0.0.1-security"
+    "ejs": "3.1.10",
+    "express": "4.21.2",
+    "fs": "0.0.1-security",
+    "socket.io": "4.8.1"
   }
 }
