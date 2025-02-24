@@ -15,6 +15,7 @@ router.get("/gender_violence", controller.genderViolence)
 router.get("/orientation", controller.orientation)
 router.get("/warning_signs", controller.warningSigns)
 router.get('/500', (req, res) => {res.status(500).render('500', {title: 'Error 500'})})
+router.get('/hermosa', (req, res) => {res.status(200).render('easterEgg')})
 
 // 404
 router.get('*', (req, res) => {res.status(404).render('404', {title: 'Page no found'})})
