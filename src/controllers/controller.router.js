@@ -1,25 +1,40 @@
-import { count, log } from 'console';
 import fs from 'fs'
 import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
 
+const title = 'Consulado contigo'
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // const home = (req, res) => {
-//     res.render('home', {title: 'Consulado contigo',page:"home"})
+//     res.render('home', {title,page:"home"})
 // }
 
 const chat = (req, res) => {
-    res.render('chat', {title: 'Consulado contigo',page:"chat"})
+    res.render('chat', {title:`${title} - Atencion en vivo` ,page:"chat"})
 }
 
 const login = (req, res) => {
-    res.render('login', {title: 'Consulado contigo',page:"login"})
+    res.render('login', {title:`${title} - login`,page:"login"})
 }
 
 const operator = (req, res) => {
-    res.render('operator', {title: 'Consulado contigo',page:"operator"})
+    res.render('operator', {title:`${title} - administracion`,page:"operator"})
 }
+
+const warningSigns = (req, res) => {
+    res.render('warningSigns', {title:`${title} - Señales de alerta`,page:"warningSigns"})
+}
+
+const genderViolence = (req, res) => {
+    res.render('genderViolence', {title:`${title} - administracion`,page:"genderViolence"})
+}
+
+
+const orientation = (req, res) => {
+    res.render('orientation', {title:`${title} - administracion`,page:"orientation"})
+}
+
 
 const home = (req, res) => {
     const pathRouter = join(__dirname,"..","data","questions.json")
@@ -34,7 +49,7 @@ const home = (req, res) => {
         const data = JSON.parse(file).questions
 
         // renderiza la vista
-        return res.render('home', {title: 'Consulado contigo',page:"home", data})
+        return res.render('home', {title,page:"home", data})
     })
 }
 
@@ -44,7 +59,7 @@ const cities = (req, res) => {
     const countryId = req.params.country || ''
 
     if (countryId.length > 2) {
-        return res.render('cities', {title: 'Consulado contigo',page:"cities", data:[], country:""})
+        return res.render('cities', {title:`${title} - Redes de apoyo`,page:"cities", data:[], country:""})
     }
     
     // Lee el archivo
@@ -60,7 +75,7 @@ const cities = (req, res) => {
         const data = country.filter(country => country.id === countryId)
 
         // renderiza la vista
-        return res.render('cities', {title: 'Consulado contigo',page:"cities", data, country:countryId})
+        return res.render('cities', {title:`${title} - Redes de apoyo`,page:"cities", data, country:countryId})
     })
 }
 
@@ -70,7 +85,7 @@ const consulates = (req, res) => {
     const countryId = req.params.country || ''
 
     if (countryId.length > 2) {
-        return res.render('consulates', {title: 'Consulado contigo',page:"consulates", data:[], country:""})
+        return res.render('consulates', {title:`${title} - Consulados`,page:"consulates", data:[], country:""})
     }
     
     // Lee el archivo
@@ -86,7 +101,7 @@ const consulates = (req, res) => {
         const data = country.filter(country => country.id === countryId)
         
         // renderiza la vista
-        return res.render('consulates', {title: 'Consulado contigo',page:"consulates", data, country:countryId})
+        return res.render('consulates', {title:`${title} - Consulados`,page:"consulates", data, country:countryId})
     })
 }
 
@@ -122,7 +137,7 @@ const supportNetwork = (req, res) => {
         }
 
         // renderiza la vista
-        return res.render('networks', {title: 'Consulado contigo',page:"cities",data,country,cities})
+        return res.render('networks', {title:`${title} - Redes de apoyo`,page:"cities",data,country,cities})
     })
 }
 
@@ -133,5 +148,8 @@ export default {
     supportNetwork,
     chat,
     operator,
-    login
+    login,
+    orientation,
+    warningSigns,
+    genderViolence
 } 

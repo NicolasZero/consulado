@@ -1,3 +1,3 @@
-function specifyCountry(val) {
-    window.location.href = `/networks/${val}`
+function specifyCountry(val, route='networks') {
+    window.location.href = `/${route}/${val}`
 }

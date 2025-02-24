@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -14,50 +14,46 @@
 <body style="background-color: #e6e6e6;">
     <%- include('includes/nav') %>
 
-    <div class="container-fluid d-flex justify-content-between align-items-center bg-primary py-2">
-        <!-- <span class="btn btn-primary"><i class="bi bi-arrow-left"></i> Regresar</span> -->
+    <aside class="container-fluid d-flex justify-content-between align-items-center bg-primary py-2">
         <label class="form-label text-white m-0 d-none d-md-block" for="country">Ubicación</label>
-        <div class="flex-fill px-3">
-            <select class="form-select text-primary border-primary" aria-label="Seleccione una opción" autocomplete="off"
-                name="country" id="country" onchange="specifyCountry(this.value)">
-                <option selected value="">Seleccione un país</option>
-                <%- include('includes/countrySelector') %>
-            </select>
-        </div>
-
+        <select class="form-select flex-fill mx-3 text-primary border-primary" aria-label="Seleccione una opción" autocomplete="off"
+            name="country" id="country" onchange="specifyCountry(this.value)">
+            <option selected value="">Seleccione un país</option>
+            <%- include('includes/countrySelector') %>
+        </select>
         <a href="/consulates/<%=country%>" class="btn btn-primary text-nowrap">Consulados <i class="bi bi-arrow-right"></i></a>
-    </div>
+    </aside>
 
-    <div class="container-fluid px-2 px-md-5 py-3">
-        <div class="text-center">
-            <h1 class="display-3 text-primary">Ciudades con redes de apoyos</h1>
+    <main class="container-fluid px-2 px-md-5 py-3">
+        <header class="text-center">
+            <h1 class="display-3 text-primary">Redes de apoyos</h1>
             <p class="lead fw-normal">
                 <% if (data.length !== 0 && country !== "") {%>
                     <i class="bi bi-search text-primary"></i> Selecciona una opción <i class="bi bi-search text-primary"></i>
                 <% }else if (data.length === 0 && country !== "") { %>
-                    <i class="bi bi-exclamation-triangle text-primary"></i> No se encontraron ciudades con redes de apoyo en el país seleccionado <i class="bi bi-exclamation-triangle text-primary"></i>
+                    <i class="bi bi-exclamation-triangle text-primary"></i> No se encontraron redes de apoyo en el país seleccionado <i class="bi bi-exclamation-triangle text-primary"></i>
                 <% }else{ %>
-                    <i class="bi bi-info-square text-primary"></i> Debe de seleccionar un país para poder ver las ciudades con redes de apoyo disponible <i class="bi bi-info-square text-primary"></i>
+                    <i class="bi bi-info-square text-primary"></i> Debe de seleccionar un país para poder ver las redes de apoyo disponible <i class="bi bi-info-square text-primary"></i>
                 <% } %>
             </p>
-        </div>
+        </header>
 
-        <div class="row justify-content-center">
+        <section class="row justify-content-center">
             <% if (data.length !== 0) { for (const element of data[0].cities) { %>
-            <div class="col-12 col-md-6 col-lg-4 py-2">
-                <div class="card h-100">
-                    <div class="card-body text-center">
+                <section class="col-12 col-md-6 col-lg-4 py-2">
+                    <article class="card h-100 card-body text-center">
                         <i class="text-primary display-1 bi bi-buildings"></i>
                         <h5 class="card-title"><%= element.name %></h5>
                         <a href="/support_networks/<%=`${country}/${element.id}`%>" class="btn btn-outline-primary fw-semibold">
                             Ver más <i class="bi bi-search"></i>
                         </a>
-                    </div>
-                </div>
-            </div>
-            <% }} %>
-        </div>
-    </div>
+                    </article>
+                </section>
+            <% }}else{ %>
+                <p class="text-center">Para la demostración seleccione Venezuela o México</p>
+            <% } %>
+        </section>
+    </main>
 
     <%- include('includes/footer') %>
     <script>

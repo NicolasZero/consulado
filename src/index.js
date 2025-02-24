@@ -11,6 +11,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
+// websocket
 io.on('connection', (socket) => {
     console.log('a user connected')
 
@@ -25,11 +26,10 @@ io.on('connection', (socket) => {
     })
 })
 
-// process.loadEnvFile('.env')
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// const {PORT:port = 3000} = process.env;
+// process.loadEnvFile('.env')
+// const {PORT:port = 8080} = process.env;
 const port = 8080
 
 app.set('view engine', 'ejs');

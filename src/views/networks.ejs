@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -14,25 +14,24 @@
 <body>
     <%- include('includes/nav') %>
 
-    <div class="container-fluid d-flex justify-content-between align-items-center bg-primary py-2">
+    <aside class="container-fluid d-flex justify-content-between align-items-center bg-primary py-2">
         <a href="/networks/<%= country %>" class="btn btn-primary text-nowrap"><i class="bi bi-arrow-left"></i> Regresar</a>
+        <select class="form-select flex-fill px-3 text-primary border-primary" aria-label="Seleccione una opción" autocomplete="off"
+            name="country" id="country" onchange="specifyCountry(this.value)">
+            <option value="">Seleccione un país</option>
+            <%- include('includes/countrySelector') %>
+        </select>
+    </aside>
 
-        <div class="flex-fill px-3">
-            <select class="form-select text-primary border-primary" aria-label="Seleccione una opción" autocomplete="off"
-                name="country" id="country" onchange="specifyCountry(this.value)">
-                <option value="">Seleccione un país</option>
-                <%- include('includes/countrySelector') %>
-            </select>
-        </div>
-    </div>
+    <main class="container-fluid px-2 px-sm-5">
+        <section class="row">
+            <article class="col-12 col-md-8 px-3 pt-3 pb-4">
+                <header class="fw-normal">
+                    <h1 class="text-primary display-4">Redes de apoyo de <%= data.name %></h1>
+                    <p class="lead"><%= data.area %></p>
+                </header>
 
-    <div class="container-fluid px-2 px-sm-5">
-        <div class="row">
-            <div class="col-12 col-md-8 px-3 pt-3 pb-4">
-                <h1 class="text-primary display-4 fw-normal">Redes de apoyo de <%= data.name %></h1>
-                <p class="lead fw-normal"><%= data.area %></p>
-
-                <div class="accordion" id="accordion">
+                <section class="accordion" id="accordion">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#panel-1">
@@ -99,24 +98,24 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </section>
+            </article>
 
-            <div class="col-12 col-md-4 p-0" style="background-color: #f3cfe4;">
-                <div class="rounded p-3">
+            <aside class="col-12 col-md-4 p-0" style="background-color: #f3cfe4;">
+                <article class="rounded p-3">
                     <h3 class="p-2 text-primary fw-normal">Otras redes de apoyo</h3>
-                    <div class="list-group">
-                        <span class="list-group-item list-group-item-action bg-primary text-white">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-action bg-primary text-white">
                             <%= data.name %>
-                        </span>
+                        </li>
                         <% for (const e of data.other) { %>
                             <a href="/support_networks/ve/<%= e.id %>" class="list-group-item list-group-item-action text-primary"><%= e.name %></a>
                         <% } %>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </ul>
+                </article>
+            </aside>
+        </section>
+    </main>
 
     <%- include('includes/footer') %>
 

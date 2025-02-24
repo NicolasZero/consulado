@@ -4,12 +4,12 @@
             <img src="/img/logo.png" height="32" alt="Inamujer Consulado Contigo" height="80">
         </span>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-list"></i>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse justify-content-end" id="navbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link nav-link-hover <%= page == 'home' ? 'active':'' %>" href="/">Inicio</a>
@@ -24,6 +24,19 @@
                     <a class="nav-link nav-link-hover <%= page == 'consulates' ? 'active':'' %>"
                         href="/consulates">Consulado</a>
                 </li>
+
+                <li class="nav-item dropdown">
+                    <% const info = (page == 'warningSigns' || page == 'genderViolence' || page == 'orientation') ? 'active' : '' %>
+                    <a class="nav-link dropdown-toggle nav-link-hover <%= info %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Información
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item <%= page == 'warningSigns' ? 'active':'' %>" href="/warning_signs">Señales de alerta</a></li>
+                      <li><a class="dropdown-item <%= page == 'genderViolence' ? 'active':'' %>" href="/gender_violence">Violencia de género</a></li>
+                      <!-- <li><hr class="dropdown-divider"></li> -->
+                      <li><a class="dropdown-item <%= page == 'orientation' ? 'active':'' %>" href="/orientation">Asistencia y Orientación</a></li>
+                    </ul>
+                  </li>
 
                 <li class="nav-item">
                     <a class="nav-link nav-link-hover <%= page == 'chat' ? 'active':'' %>"
