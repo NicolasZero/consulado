@@ -8,10 +8,10 @@
         <%= title %>
     </title>
     <%- include('includes/head') %>
+    <script src="/js/change.country.js"></script>
 </head>
 
 <body style="background-color: #e6e6e6;">
-    <div class="loader-page"></div>
     <%- include('includes/nav') %>
 
     <div class="container-fluid d-flex justify-content-between align-items-center bg-primary py-2">
@@ -60,12 +60,8 @@
     </div>
 
     <%- include('includes/footer') %>
-    <script src="/js/loader.js"></script>
     <script>
         document.getElementById("country").value = "<%= country %>"
-        function specifyCountry(val) {
-            window.location.href = `/cities/${val}`
-        }
     </script>
 </body>
 

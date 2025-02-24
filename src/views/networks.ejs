@@ -8,14 +8,14 @@
         <%= title %>
     </title>
     <%- include('includes/head') %>
+    <script src="/js/change.country.js"></script>
 </head>
 
 <body>
-    <div class="loader-page"></div>
     <%- include('includes/nav') %>
 
     <div class="container-fluid d-flex justify-content-between align-items-center bg-primary py-2">
-        <a href="/cities/<%= country %>" class="btn btn-primary text-nowrap"><i class="bi bi-arrow-left"></i> Regresar</a>
+        <a href="/networks/<%= country %>" class="btn btn-primary text-nowrap"><i class="bi bi-arrow-left"></i> Regresar</a>
 
         <div class="flex-fill px-3">
             <select class="form-select text-primary border-primary" aria-label="Seleccione una opción" autocomplete="off"
@@ -118,15 +118,10 @@
         </div>
     </div>
 
-
     <%- include('includes/footer') %>
-    <script src="/js/loader.js"></script>
 
     <script>
         document.getElementById("country").value = "<%= country %>"
-        function specifyCountry(val) {
-            window.location.href = `/cities/${val}`
-        }
     </script>
 </body>
 
