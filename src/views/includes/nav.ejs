@@ -1,8 +1,13 @@
-<nav class="navbar navbar-expand-md bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand m-0 p-0">
             <img src="/img/logo.png" height="32" alt="Inamujer Consulado Contigo" height="80">
         </span>
+
+        <div class="d-block d-lg-none form-check form-switch px-3">
+            <input class="form-check-input theme-small" type="checkbox" role="switch" id="theme-small" name="theme">
+            <label class="form-check-label" for="theme-small">Tema</label>
+        </div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,11 +54,27 @@
                 </li>
             </ul>
 
-            <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Iniciar
-                sesión <i class="bi bi-box-arrow-in-right"></i></a>
+            <div class="d-none d-lg-block form-check form-switch px-3">
+                <input class="form-check-input theme" type="checkbox" role="switch" id="theme-large" name="theme" onclick="changeTheme(this.checked)">
+                <label class="form-check-label" for="theme-large">Tema</label>
+            </div>
+
+            <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Iniciar sesión <i class="bi bi-box-arrow-in-right"></i>
+            </a>
         </div>
     </div>
 </nav>
+
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.getElementById('theme-small').checked = true
+        document.getElementById('theme-large').checked = true
+    }else{
+        document.getElementById('theme-small').checked = false
+        document.getElementById('theme-large').checked = false
+    }
+</script>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1">

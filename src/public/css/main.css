@@ -17,7 +17,7 @@ footer{
 }
 
 /* active */
-.navbar-nav .nav-link.active,.nav-link.active{
+.nav-link-hover.active{
     font-weight: bold;
     color: var(--bs-primary) !important;
 }
@@ -29,9 +29,9 @@ footer{
 }
 
 /* tabs */
-.nav-tabs{
+/* .nav-tabs{
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
+} */
 
 textarea{
     resize: vertical;
@@ -47,6 +47,7 @@ textarea{
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* linea separadora */
 .accordion-body div:not(:last-child) {
     border-bottom: 1px solid var(--bs-primary);
     padding-bottom: 8px;
@@ -75,4 +76,18 @@ textarea{
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;
     white-space: -o-pre-wrap;
+}
+
+.navbar-toggler{
+    color: var(--bs-primary);
+    border-color: rgba(var(--bs-primary-rgb), 0.25);
+}
+.navbar-toggler:active{
+    background-color: var(--bs-primary);
+    color: #fff;
+}
+.navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: var(--bs-primary-box-shadow);
 }

@@ -13,6 +13,7 @@
 
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
+
         const username = 'Operator'
         const socket = io(
             {
@@ -52,20 +53,29 @@
 <body>
     <%- include('includes/nav') %>
 
-    <div class="p-0 row m-0 p-0 justify-content-center" style="background-color: #ffe7f5;">
+    <main class="p-0 row m-0 px-2 justify-content-center" style="background-color: #ffe7f5;">
+        <aside class="col p-0 bg-body-tertiary">
+            <header class="bg-primary py-3 text-center">
+                <h4 class="fs-3 fw-light m-0 text-white">Salas</h4>
+            </header>
 
-        <div class="col-12 col-md-10 col-lg-8 p-0 bg-body-tertiary">
+            <div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-action">General</li>
+                    <li class="list-group-item">Privado</li>
+                </ul>
+            </div>
+        </aside>
 
-            <div class="bg-primary p-3 text-center">
+        <section class="col-12 col-md-8 col-lg-8 p-0 bg-body-tertiary d-none d-md-block">
+            <header class="bg-primary py-3 text-center">
                 <h4 class="fs-3 fw-light m-0 text-white">Operadora</h4>
-            </div>
+            </header>
 
-            <div class="text-center">
-                <p><b>Nota:</b> Esta area es solo de pruebas. Pruebe enviar un mensaje.</p>
-            </div>
+            <p class="text-center border-bottom"><b>Nota:</b> Esta área es solo de pruebas. Pruebe enviar un mensaje.</p>
 
-            <div id="chat-body" class="msg-panel d-flex flex-column p-3 border-top border-bottom">
-            </div>
+            <section id="chat-body" class="msg-panel d-flex flex-column p-3 border-bottom">
+            </section>
 
             <form class="input-group p-3" id="form">
                 <button class="input-group-text" id="basic-addon1">
@@ -73,8 +83,8 @@
                 </button>
                 <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
             </form>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <%- include('includes/footer') %>
 </body>
