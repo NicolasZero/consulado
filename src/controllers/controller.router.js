@@ -43,7 +43,7 @@ const home = (req, res) => {
     fs.readFile(pathRouter, 'utf8', (err, file) => {
         if (err) {
             console.error('Error al leer el archivo', err)
-            return res.render('500', {title: 'Error 500'})
+            return res.status(500).render('500', {title: 'Error 500'})
         }
         
         const data = JSON.parse(file).questions
@@ -66,7 +66,7 @@ const cities = (req, res) => {
     fs.readFile(pathRouter, 'utf8', (err, file) => {
         if (err) {
             console.error('Error al leer el archivo', err)
-            return res.render('500', {title: 'Error 500'})
+            return res.status(500).render('500', {title: 'Error 500'})
         }
         
         const country = JSON.parse(file).country
@@ -92,7 +92,7 @@ const consulates = (req, res) => {
     fs.readFile(pathRouter, 'utf8', (err, file) => {
         if (err) {
             console.error('Error al leer el archivo', err)
-            return res.render('500', {title: 'Error 500'})
+            return res.status(500).render('500', {title: 'Error 500'})
         }
         
         const country = JSON.parse(file).country
@@ -110,14 +110,14 @@ const supportNetwork = (req, res) => {
     const {city, country} = req.params
 
     if (!Number(city) || country.length > 2) {
-        return res.render('404', {title: 'Page no found'})
+        return res.status(404).render('404', {title: 'Page no found'})
     }
     
     // Lee el archivo
     fs.readFile(pathRouter, 'utf8', (err, file) => {
         if (err) {
             console.error('Error al leer el archivo', err)
-            return res.render('500', {title: 'Error 500'})
+            return res.status(500).render('500', {title: 'Error 500'})
         }
         
         const json = JSON.parse(file).country
@@ -126,14 +126,14 @@ const supportNetwork = (req, res) => {
         const cities = json.find(e => e.id === country)
         
         if (!cities) {
-            return res.render('404', {title: 'Page no found'})
+            return res.status(404).render('404', {title: 'Page no found'})
         }
         
         // busca la ciudad
         const data = cities.cities.find(e => e.id == city)
 
         if (!data) {
-            return res.render('404', {title: 'Page no found'})
+            return res.status(404).render('404', {title: 'Page no found'})
         }
 
         // renderiza la vista
