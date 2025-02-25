@@ -46,6 +46,11 @@
                 msg.value = ''
             }
         })
+
+        const changeChannel = (channel) => {
+            // socket.emit('join',`channel-${channel}`);
+            console.log(channel);
+        }
     </script>
 </head>
 
@@ -72,6 +77,14 @@
                     <i class="bi bi-send-fill text-secondary"></i>
                 </button>
                 <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
+                <div>
+                    <select class="form-select" name="channel" id="" onchange="changeChannel(this.value)">
+                        <option value="1">Sala 1</option>
+                        <option value="2">Sala 2</option>
+                        <option value="3">Sala 3</option>
+                        <option value="4">Sala 4</option>
+                    </select>
+                </div>
             </form>
         </div>
     </div>

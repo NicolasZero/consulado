@@ -10,6 +10,13 @@
     <%- include('includes/head') %>
     <link rel="stylesheet" href="/css/msg.css">
 
+    <style>
+        .btn-chat, .btn-ws{
+            display: none;
+        }
+
+    </style>
+
 
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
@@ -47,29 +54,42 @@
                 msg.value = ''
             }
         })
+
+        const changeChannel = (channel) => {
+            // socket.emit('join',`channel-${channel}`);
+            // console.log(channel);
+        }
+
+        document.querySelector('.list-group-item').addEventListener('click', changeChannel(1))
     </script>
 </head>
 
 <body>
     <%- include('includes/nav') %>
 
-    <main class="p-0 row m-0 px-2 justify-content-center" style="background-color: #ffe7f5;">
+    <main class="p-0 row m-0 px-1 px-md-3 justify-content-center" style="background-color: #ffe7f5;">
+
+        <!-- sidebar -->
         <aside class="col p-0 bg-body-tertiary">
             <header class="bg-primary py-3 text-center">
                 <h4 class="fs-3 fw-light m-0 text-white">Salas</h4>
             </header>
 
-            <div>
+            <div class="h-100 border-end">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action">General</li>
-                    <li class="list-group-item">Privado</li>
+                    <li class="list-group-item list-group-item-action">Sala 1</li>
+                    <li class="list-group-item list-group-item-action">Sala 2</li>
+                    <li class="list-group-item list-group-item-action">Sala 3</li>
+                    <li class="list-group-item list-group-item-action">Sala 4</li>
+                    <!-- <li class="list-group-item list-group-item-action">Sala 5</li> -->
                 </ul>
             </div>
         </aside>
 
+        <!-- chat -->
         <section class="col-12 col-md-8 col-lg-8 p-0 bg-body-tertiary d-none d-md-block">
             <header class="bg-primary py-3 text-center">
-                <h4 class="fs-3 fw-light m-0 text-white">Operadora</h4>
+                <h4 class="fs-3 fw-light m-0 text-white">Conversación</h4>
             </header>
 
             <p class="text-center border-bottom"><b>Nota:</b> Esta área es solo de pruebas. Pruebe enviar un mensaje.</p>

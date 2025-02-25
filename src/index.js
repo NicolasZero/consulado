@@ -8,6 +8,7 @@ import sqlite from 'sqlite3'
 
 // Rutas
 import router from './routes/router.js';
+import { Socket } from 'dgram';
 
 // constantes
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -47,15 +48,22 @@ const io = new Server(server);
 
 // websocket
 io.on('connection', (socket) => {
-    console.log('a user connected')
+    // console.log('a user connected')
 
     socket.on('disconnect', () => {
-        console.log('user disconnected')
+        // console.log('user disconnected')
+    })
+
+    socket.on('join', (channel) => {
+        socket.join(`channel-${channel}`)
+        io.to(`channel-${channel}`).socket.emit('join', channel)
+        // socket.leave(`channel-${channel}`);
+        console.log(channel)
     })
 
     socket.on('chat message', (msg) => {
         const username = socket.handshake.auth.username ?? 'anonymous'
-        console.log({msg,username})
+        // console.log({msg,username})
         io.emit('chat message', {msg,username})
     })
 })
