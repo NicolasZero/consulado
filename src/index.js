@@ -62,9 +62,9 @@ io.on('connection', (socket) => {
     //     socketRoom = room
     socket.on('join', (data) => {
         socket.join(data.room)
-        // socketRoom = room
-        socketMap[socket.id] = data.username
-        // console.log(`Socket: "${socket.id}" joined room: "${room}"`)
+        socketRoom = data.room
+        // socketMap[socket.id] = data.username
+        console.log(`Socket: "${socket.id}" joined room: "${data.room}"`)
     })
 
     // socket.on('chat', (data) => {
@@ -73,9 +73,11 @@ io.on('connection', (socket) => {
 
     socket.on('chat', (data) => {
         io.to(socketRoom).emit('chat', {
-            username: socketMap[socket.id],
-            message: data.message
+            username: data.user,
+            message: data.msg
         });
+        console.log(`Enviado msg: ${data.msg} al room: ${socketRoom}`);
+        
     });
 
     // socket.on('room', (room) => {
