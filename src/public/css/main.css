@@ -91,3 +91,15 @@ textarea{
     outline: 0;
     box-shadow: var(--bs-primary-box-shadow);
 }
+
+:root, [data-bs-theme="light"]{
+    --bs-tertiary: #f3cfe4;
+}
+
+[data-bs-theme="dark"]{
+    --bs-tertiary: #461c34;
+}
+
+.bg-tertiary{
+    background-color: var(--bs-tertiary);
+}

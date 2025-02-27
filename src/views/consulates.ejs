@@ -10,7 +10,7 @@
     <script src="/js/change.country.js"></script>
 </head>
 
-<body style="background-color: #e6e6e6;">
+<body class="bg-body-secondary">
     <%- include('includes/nav') %>
 
     <aside class="container-fluid d-flex justify-content-between align-items-center bg-primary py-2">
@@ -25,7 +25,7 @@
 
     <main class="container-fluid px-2 px-md-5 py-3">
         <header class="text-center">
-            <h1 class="display-3 text-primary">Consulado General de Venezuela</h1>
+            <h1 class="display-3 text-primary fw-normal">Consulado General de Venezuela</h1>
             <p class="lead fw-normal">
                 <% if (data.length === 0 && country !== "") { %>
                     <i class="bi bi-exclamation-triangle text-primary"></i> No se encontraron consulados en el país seleccionado <i class="bi bi-exclamation-triangle text-primary"></i>
@@ -44,21 +44,21 @@
                             <i class="text-primary display-1 bi bi-bank2"></i>
                             <h5 class="card-title h3"><%= element.city %></h5>
                         </header>
-                        <ul class="text-primary fw-semibold">
-                            <li>Dirección: 
-                                <span class="text-dark fw-normal"><%= element.address %></span>
+                        <ul>
+                            <li>
+                                <span class="text-primary fw-semibold">Dirección: </span><%= element.address %>
                             </li>
-                            <li>Teléfono: 
-                                <span class="text-dark fw-normal"><%= element.phone %></span>
+                            <li>
+                                <span class="text-primary fw-semibold">Teléfono: </span><%= element.phone %>
                             </li>
-                            <li>Correo: 
-                                <span class="text-dark fw-normal"><%= element.email %></span>
+                            <li>
+                                <span class="text-primary fw-semibold">Correo: </span> <%= element.email %>
                             </li>
                         </ul>
                     </article>
                 </section>
             <% }}else{ %>
-                <p class="text-center">Para la demostración seleccione Venezuela o México</p>
+                <p class="text-center text-primary">Para la demostración seleccione Venezuela o México</p>
             <% } %>
         </article>
     </main>

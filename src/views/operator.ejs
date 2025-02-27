@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-
+<!-- https://tincode.es/blog/manejo-de-salas-con-socket-io-y-react-hooks -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,53 +21,147 @@
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
 
-        const username = 'Operator'
-        const socket = io(
-            {
-                auth:{
-                    username: username
-                }
-            }
-        );
+        // const username = 'Operator'
+        // const socket = io(
+        //     {
+        //         auth:{
+        //             username: username
+        //         }
+        //     }
+        // );
 
-        const form = document.getElementById('form')
-        const chat = document.getElementById('chat-body')
+        // const form = document.getElementById('form')
+        // const chat = document.getElementById('chat-body')
         
-        socket.on('chat message', (msg) => {
-            const div = document.createElement('div')
-            if (msg.username === username) {
-                div.classList.add('msg', 'msg-own')
-                div.innerHTML = `<span>Yo</span><p>${msg.msg}</p>`
-            }else{
-                div.classList.add('msg', 'msg-other')
-                div.innerHTML = `<span>${msg.username}</span><p>${msg.msg}</p>`
+        // socket.on('chat message', (msg) => {
+        //     const div = document.createElement('div')
+        //     if (msg.username === username) {
+        //         div.classList.add('msg', 'msg-own')
+        //         div.innerHTML = `<span>Yo</span><p>${msg.msg}</p>`
+        //     }else{
+        //         div.classList.add('msg', 'msg-other')
+        //         div.innerHTML = `<span>${msg.username}</span><p>${msg.msg}</p>`
+        //     }
+        //     chat.appendChild(div)
+        //     chat.scrollTop = chat.scrollHeight
+        // })
+
+        // form.addEventListener('submit', (e) => {
+        //     e.preventDefault()
+        //     const msg = document.getElementById('msg')
+        //     if (msg.value) {
+        //         socket.emit('chat message', msg.value)
+        //         msg.value = ''
+        //     }
+        // })
+
+        // socket.on('join', (msg) => {
+        //     console.log(msg);
+        // })
+
+        // socket.on('rooms', (rooms) => {
+        //     console.log(rooms);
+        // })
+
+        // const changeChannel = (channel) => {
+        //     // socket.join(`channel-${channel}`)
+        //     socket.emit('join', channel)
+        //     console.log('Solicitar unirse');
+        // }
+        
+        let chat = []
+
+        document.querySelector('.list-group').addEventListener('click', (e) => {
+        //    e.preventDefault()
+        //    console.log(e.target.dataset.channel)
+            initiateSocket(e.target.dataset.channel)
+
+            // Para darle estilos
+            // console.log(e.target.classList.contains('active'));
+            // console.log(e.target.classList.contains('active'));
+            if (document.querySelector('.list-group-item.active')) {document.querySelector('.list-group-item.active').classList.remove('active')}
+            e.target.classList.add('active')
+            
+            // ==================
+
+            subscribeToChat((err, msg) => {
+                if (err) {return}
+                chat = [msg, ...chat]
+            })
+            return () => {
+                disconnectSocket();
             }
-            chat.appendChild(div)
-            chat.scrollTop = chat.scrollHeight
         })
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault()
-            const msg = document.getElementById('msg')
-            if (msg.value) {
-                socket.emit('chat message', msg.value)
-                msg.value = ''
-            }
+        document.querySelector('.disconnect').addEventListener('click', (e) => {
+            // Para darle estilos
+            if (document.querySelector('.list-group-item.active')) {document.querySelector('.list-group-item.active').classList.remove('active')}
+            // ==================
+
+            disconnectSocket()
         })
 
-        const changeChannel = (channel) => {
-            // socket.emit('join',`channel-${channel}`);
-            // console.log(channel);
+        let socket
+        let roomSelected = ''
+        const rooms = ['a','b','c','d'] //No se usa pero es para referencia
+
+        const initiateSocket = (room) => {
+            if (roomSelected === room) {
+                return
+            }
+            roomSelected = room
+            socket = io()
+            if (socket && room) {
+                socket.emit('join',room)
+                console.log('Socket iniciado');
+            }
         }
 
-        document.querySelector('.list-group-item').addEventListener('click', changeChannel(1))
+        const disconnectSocket = () => {
+            if(socket) {
+                socket.disconnect()
+                roomSelected = ''
+                console.log('Socket desconectado');
+            };
+        }
+
+        const subscribeToChat = (cb) => {
+            if (!socket) {return(true)};
+            socket.on('chat', msg => {
+                console.log('Websocket evento recivido!');
+                return cb(null, msg);
+            });
+        }
+
+        const sendMessage = (room, msg) => {
+            if (!socket || !msg || !room) {
+                return(false)
+            }
+            if (socket) socket.emit('chat', { msg, room });
+        }
+
+         form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const msg = document.getElementById('msg')
+            // if (msg.value) {
+            //     socket.emit('chat message', msg.value)
+            //     msg.value = ''
+            // }
+            console.log(msg.value, roomSelected);
+            
+            if (msg.value && roomSelected) {
+                sendMessage(roomSelected,msg.value)
+                // msg.value = ''
+            }
+        })
+
     </script>
 </head>
 
 <body>
     <%- include('includes/nav') %>
 
-    <main class="p-0 row m-0 px-1 px-md-3 justify-content-center" style="background-color: #ffe7f5;">
+    <main class="p-0 row m-0 px-1 px-md-3 justify-content-center bg-tertiary">
 
         <!-- sidebar -->
         <aside class="col p-0 bg-body-tertiary">
@@ -77,12 +171,12 @@
 
             <div class="h-100 border-end">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action">Sala 1</li>
-                    <li class="list-group-item list-group-item-action">Sala 2</li>
-                    <li class="list-group-item list-group-item-action">Sala 3</li>
-                    <li class="list-group-item list-group-item-action">Sala 4</li>
-                    <!-- <li class="list-group-item list-group-item-action">Sala 5</li> -->
+                    <li class="list-group-item list-group-item-action" data-channel="a">Sala 1</li>
+                    <li class="list-group-item list-group-item-action" data-channel="b">Sala 2</li>
+                    <li class="list-group-item list-group-item-action" data-channel="c">Sala 3</li>
+                    <li class="list-group-item list-group-item-action" data-channel="d">Sala 4</li>
                 </ul>
+                <button class="btn btn-secondary mx-3 disconnect">Desconectar</button>
             </div>
         </aside>
 

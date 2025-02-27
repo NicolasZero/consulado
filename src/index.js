@@ -12,14 +12,13 @@ import { Socket } from 'dgram';
 
 // constantes
 const __dirname = dirname(fileURLToPath(import.meta.url));
-// console.log();
 
-// base de dato
-const db = new sqlite.Database(join(__dirname,"data","data.db"), sqlite.OPEN_READWRITE, (err) => {
-    if (err) {
-        console.error(err.message);
-    }
-});
+// conectarse a la base de dato
+// const db = new sqlite.Database(join(__dirname,"data","data.db"), sqlite.OPEN_READWRITE, (err) => {
+//     if (err) {
+//         console.error(err.message);
+//     }
+// });
 
 // para modificaciones
 // const sql = `INSERT INTO users (name, password) VALUES ('admin', 'admin123');`;
@@ -46,26 +45,99 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
+const rooms = {}
+
+const socketMap = {}
 // websocket
 io.on('connection', (socket) => {
-    // console.log('a user connected')
+    console.log('a user connected: ', socket.id)
+    let socketRoom;
 
     socket.on('disconnect', () => {
-        // console.log('user disconnected')
+        console.log('user disconnected')
     })
 
-    socket.on('join', (channel) => {
-        socket.join(`channel-${channel}`)
-        io.to(`channel-${channel}`).socket.emit('join', channel)
-        // socket.leave(`channel-${channel}`);
-        console.log(channel)
+    // socket.on('join', (room) => {
+    //     socket.join(room)
+    //     socketRoom = room
+    socket.on('join', (data) => {
+        socket.join(data.room)
+        // socketRoom = room
+        socketMap[socket.id] = data.username
+        // console.log(`Socket: "${socket.id}" joined room: "${room}"`)
     })
 
-    socket.on('chat message', (msg) => {
-        const username = socket.handshake.auth.username ?? 'anonymous'
-        // console.log({msg,username})
-        io.emit('chat message', {msg,username})
-    })
+    // socket.on('chat', (data) => {
+    //     io.to(socketRoom).emit('chat', data.message);
+    // });
+
+    socket.on('chat', (data) => {
+        io.to(socketRoom).emit('chat', {
+            username: socketMap[socket.id],
+            message: data.message
+        });
+    });
+
+    // socket.on('room', (room) => {
+    //     console.log(`Socket: "${socket.id}" joined room: "${room}"`)
+    //     socket.join(room)
+    // })
+
+    // socket.on('chat', (data) => {
+    //     const {msg, room} = data
+    //     console.log(`msg: "${msg}", room: "${room}"`)
+    //     io.to(room).emit('chat', msg)
+    // })
+
+
+
+
+
+    // socket.on('room', (channel) => {
+    //     io.emit(channel)
+    // })
+
+    // socket.emit('rooms', io.sockets.adapter.rooms)
+    // socket.emit('rooms', rooms)
+
+    // socket.on('join room', ({room,username}) => {
+        // socket.join(room)
+        // socket.room = room
+
+        // si no existe la sala la creamos
+        // if (!rooms[room]) {
+        //     rooms[room] = {
+        //         admin: socket.id,
+        //         users: {}
+        //     }
+        // }
+
+        // agregamos el usuario a la sala
+        // rooms[room].users[socket.id] = {username}
+
+        // enviamos la lista de salas
+        // socket.emit('rooms', rooms)
+
+        // socket.emit('joined room', {room,username})
+    // })
+
+    // socket.on('change channel', (channel) => {
+    //     socket.join(`channel-${channel}`);
+    //     // console.log(channel);
+    // })
+
+    // socket.join('channel-1');
+
+    // socket.on('channel-1', (msg) => {
+    //     // socket.join(`channel-${channel}`);
+    //     // console.log(channel);
+    // })
+
+    // socket.on('chat message', (msg) => {
+    //     const username = socket.handshake.auth.username ?? 'anonymous'
+    //     // console.log({msg,username})
+    //     io.emit('chat message', {msg,username})
+    // })
 })
 
 // const __dirname = dirname(fileURLToPath(import.meta.url));
