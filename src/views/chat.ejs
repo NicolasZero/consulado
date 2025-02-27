@@ -10,47 +10,52 @@
     <%- include('includes/head') %>
     <link rel="stylesheet" href="/css/msg.css">
 
+    <style>
+        .btn-chat, .btn-ws{
+            display: none;
+        }
+    </style>
 
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
-        const username = 'Anonymous'
-        const socket = io(
-            {
-                auth:{
-                    username: username
-                }
-            }
-        );
+        // const username = 'Anonymous'
+        // const socket = io(
+        //     {
+        //         auth:{
+        //             username: username
+        //         }
+        //     }
+        // );
 
-        const form = document.getElementById('form')
-        const chat = document.getElementById('chat-body')
+        // const form = document.getElementById('form')
+        // const chat = document.getElementById('chat-body')
         
-        socket.on('chat message', (msg) => {
-            const div = document.createElement('div')
-            if (msg.username === username) {
-                div.classList.add('msg', 'msg-own')
-                div.innerHTML = `<span>Yo</span><p>${msg.msg}</p>`
-            }else{
-                div.classList.add('msg', 'msg-other')
-                div.innerHTML = `<span>${msg.username}</span><p>${msg.msg}</p>`
-            }
-            chat.appendChild(div)
-            chat.scrollTop = chat.scrollHeight
-        })
+        // socket.on('chat message', (msg) => {
+        //     const div = document.createElement('div')
+        //     if (msg.username === username) {
+        //         div.classList.add('msg', 'msg-own')
+        //         div.innerHTML = `<span>Yo</span><p>${msg.msg}</p>`
+        //     }else{
+        //         div.classList.add('msg', 'msg-other')
+        //         div.innerHTML = `<span>${msg.username}</span><p>${msg.msg}</p>`
+        //     }
+        //     chat.appendChild(div)
+        //     chat.scrollTop = chat.scrollHeight
+        // })
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault()
-            const msg = document.getElementById('msg')
-            if (msg.value) {
-                socket.emit('chat message', msg.value)
-                msg.value = ''
-            }
-        })
+        // form.addEventListener('submit', (e) => {
+        //     e.preventDefault()
+        //     const msg = document.getElementById('msg')
+        //     if (msg.value) {
+        //         socket.emit('chat message', msg.value)
+        //         msg.value = ''
+        //     }
+        // })
 
-        const changeChannel = (channel) => {
-            // socket.emit('join',`channel-${channel}`);
-            console.log(channel);
-        }
+        // const changeChannel = (channel) => {
+        //     // socket.emit('join',`channel-${channel}`);
+        //     console.log(channel);
+        // }
     </script>
 </head>
 
@@ -59,7 +64,10 @@
 
     <div class="p-0 row m-0 p-0 justify-content-center bg-tertiary">
 
-        <div class="col-12 col-md-10 col-lg-8 p-0 bg-body-tertiary">
+        <div class="col-8 col-md-8 col-lg-4 p-0 bg-body-tertiary">
+        </div>
+
+        <div class="col-12 col-md-10 col-lg-8 p-0 bg-body-tertiary d-none">
 
             <div class="bg-primary p-3 text-center">
                 <h4 class="fs-3 fw-light m-0 text-white">Atención en vivo</h4>
@@ -77,14 +85,6 @@
                     <i class="bi bi-send-fill text-secondary"></i>
                 </button>
                 <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
-                <div>
-                    <select class="form-select" name="channel" id="" onchange="changeChannel(this.value)">
-                        <option value="1">Sala 1</option>
-                        <option value="2">Sala 2</option>
-                        <option value="3">Sala 3</option>
-                        <option value="4">Sala 4</option>
-                    </select>
-                </div>
             </form>
         </div>
     </div>
