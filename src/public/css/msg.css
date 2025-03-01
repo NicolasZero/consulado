@@ -3,7 +3,7 @@
     overflow-y: scroll;
     scroll-behavior: smooth;
     min-height: 200px;
-    height: 60vh;
+    height: calc(60vh - 50px);
 }
 
 /* Mensajes */
@@ -16,42 +16,22 @@
 
 .msg p{
     margin: 0;
+    color: #fff;
 }
 
 .msg-other {
-    /* background-color: #c0c7cc; */
     background-color: var(--bs-secondary);
-    color: #fff;
-    /* color: #313131; */
     align-self: start;
     margin-right: 3rem;
 }
 
-/* .msg-other::before {
-    content: 'Operador';
-    color: #313131;
-    position: absolute;
-    top: -1.5rem;
-    left: 1rem;
-} */
-
 .msg-own {
     background-color: var(--bs-primary);
-    color: #fff;
     align-self: end;
     margin-left: 3rem;
 }
 
-/* .msg-own::before {
-    content: 'Yo';
-    color: #313131;
-    position: absolute;
-    top: -1.5rem;
-    right: 1rem;
-} */
-
 .msg span{
-    color: #313131;
     position: absolute;
     top: -1.5rem;
 }

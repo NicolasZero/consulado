@@ -23,8 +23,8 @@
         </select>
     </aside>
 
-    <main class="container-fluid px-2 px-sm-5">
-        <section class="row">
+    <main class="container-fluid px-2 px-sm-5 flex-fill d-flex justify-content-stretch">
+        <section class="row flex-fill">
             <article class="col-12 col-md-8 px-3 pt-3 pb-4">
                 <header class="fw-normal">
                     <h1 class="text-primary display-4 fw-normal">Redes de apoyo de <%= data.name %></h1>
@@ -118,6 +118,8 @@
     </main>
 
     <%- include('includes/footer') %>
+    <%- include('includes/chatBtn') %>
+    <%- include('includes/whatsappBtn') %>
 
     <script>
         document.getElementById("country").value = "<%= country %>"

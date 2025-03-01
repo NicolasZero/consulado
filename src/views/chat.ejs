@@ -9,12 +9,7 @@
     </title>
     <%- include('includes/head') %>
     <link rel="stylesheet" href="/css/msg.css">
-
-    <style>
-        .btn-chat, .btn-ws{
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/validations.css">
 
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
@@ -56,38 +51,125 @@
         //     // socket.emit('join',`channel-${channel}`);
         //     console.log(channel);
         // }
+
+        const printMsg = (data,user) =>{
+            const chat = document.getElementById('chat-body')
+            const div = document.createElement('div')
+            if (data.username === user) {
+                div.classList.add('msg', 'msg-own')
+                div.innerHTML = `<span>Yo</span><p>${data.message}</p>`
+            }else{
+                div.classList.add('msg', 'msg-other')
+                div.innerHTML = `<span>${data.username}</span><p>${data.message}</p>`
+            }
+            chat.appendChild(div)
+            chat.scrollTop = chat.scrollHeight
+        }
+
+        const formDetails = document.getElementById('form-details')
+
+        formDetails.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            const email = document.getElementById('email').value
+            const ic = document.getElementById('ic').value
+            const name = document.getElementById('name').value
+            const lastname = document.getElementById('lastname').value
+            const message = document.getElementById('message').value
+            
+
+            document.getElementById('form').classList.add('d-none')
+            document.getElementById('chat').classList.remove('d-none')
+
+            const botMsg = `Bienvenida ${name} ${lastname}. Por favor espere un momento, estamos atendiendo su solicitud...`
+
+            printMsg({username: 'Bot', message: botMsg}, name)
+            printMsg({username: name, message},name)
+
+
+            console.log({email, ic, name, lastname, message});
+            
+            // if (msg.value) {
+            //     socket.emit('chat message', msg.value)
+            //     msg.value = ''
+            // }
+        })
+
     </script>
 </head>
 
 <body>
     <%- include('includes/nav') %>
 
-    <div class="p-0 row m-0 p-0 justify-content-center bg-tertiary">
+    <header class="text-center text-white bg-primary">
+        <h1>Atencion en linea</h1>
+    </header>
+    <main class="d-flex justify-content-center flex-fill bg-tertiary">
+        <section id="form" class="col-12 col-md-10 bg-body-tertiary my-4 rounded p-3" style="height: fit-content;">
+            <p class="lead">Por favor ingrese sus datos</p>
+            <form class="row" id="form-details">
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input required type="email" autocomplete="off" class="form-control" id="email" placeholder="name@example.com">
+                        <label class="text-primary" for="email">Correo</label>
+                        <span class="invalid-feedback">Por favor ingrese un correo valido</span>
+                    </div>
+                </div>
 
-        <div class="col-8 col-md-8 col-lg-4 p-0 bg-body-tertiary">
-        </div>
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input required type="text" autocomplete="off" class="form-control" id="ic" placeholder="12345678" pattern="[0-9]{7,9}">
+                        <label class="text-primary" for="ic">Cédula de Identidad</label>
+                        <span class="invalid-feedback">Solo números de 7 a 9 digitos</span>
+                    </div>
+                </div>
 
-        <div class="col-12 col-md-10 col-lg-8 p-0 bg-body-tertiary d-none">
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input required type="text" maxlength="35" autocomplete="off" class="form-control" id="name" placeholder="Nombre" pattern="[A-Za-z 0-9]+">
+                        <label class="text-primary" for="name">Primer nombre</label>
+                        <span class="invalid-feedback">Ingrese caracteres</span>
+                    </div>
+                </div>
 
-            <div class="bg-primary p-3 text-center">
-                <h4 class="fs-3 fw-light m-0 text-white">Atención en vivo</h4>
-            </div>
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input required type="text" maxlength="35" autocomplete="off" class="form-control" id="lastname" placeholder="Apellido" pattern="[A-Za-z 0-9]+">
+                        <label class="text-primary" for="lastname">Primer apellido</label>
+                        <span class="invalid-feedback">Ingrese caracteres</span>
+                    </div>
+                </div>
 
-            <div class="text-center">
-                <p>Pruebe escribir un mensaje <br><b>Nota:</b> Los mensajes no son guardados</p>
-            </div>
+                <hr>
 
+                <p class="lead">Por favor ingrese su consulta</p>
+
+                <div class="col-12">
+                    <div class="form-floating">
+                        <textarea required class="form-control" placeholder="Mensaje" id="message" minlength="10" maxlength="300" style="height: 100px"></textarea>
+                        <label class="text-primary" for="message">Mensaje</label>
+                        <span class="invalid-feedback">Debe de tener mínimo 10 caracteres</span>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center pt-3">
+                    <button type="submit" class="btn btn-primary rounded-pill px-5">Enviar</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="chat" class="col-12 col-md-10 bg-body-tertiary d-none" style="height: fit-content;">
             <div id="chat-body" class="msg-panel d-flex flex-column p-3 border-top border-bottom">
             </div>
 
-            <form class="input-group p-3" id="form">
+            <form class="input-group p-3" id="form-chat">
                 <button class="input-group-text" id="basic-addon1">
                     <i class="bi bi-send-fill text-secondary"></i>
                 </button>
                 <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
             </form>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <%- include('includes/footer') %>
 </body>

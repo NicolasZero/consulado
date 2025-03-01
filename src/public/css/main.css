@@ -71,7 +71,7 @@ textarea{
     transition: all 0.3s ease;
 }
 
-/* Salto de linea */
+/* Permitir que el contenedor tenga salto de linea */
 .w-space{
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;

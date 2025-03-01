@@ -1,0 +1,25 @@
+.form-floating:has(:focus:invalid) .invalid-feedback{
+    display: block;
+}
+
+.form-floating:has(:focus:invalid) label{
+    color: #dc3545 !important;
+}
+
+.form-floating:has(:focus:invalid) input,
+.form-floating:has(:focus:invalid) select,
+.form-floating:has(:focus:invalid) textarea{
+    border-color: #dc3545 !important;
+    box-shadow: none !important;
+}
+
+.form-floating:has(:valid) label{
+    color: #198754 !important;
+}
+
+.form-floating:has(:valid) input,
+.form-floating:has(:valid) select,
+.form-floating:has(:valid) textarea{
+    border-color: #198754 !important;
+    box-shadow: none !important;
+}

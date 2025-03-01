@@ -15,7 +15,7 @@
     </style>
 </head>
 
-<body style="background-color: #ffe7f5;">
+<body class="bg-tertiary">
     <%- include('includes/nav') %>
 
     <div class="container flex-fill d-flex justify-content-center align-items-center py-5">
@@ -25,17 +25,17 @@
             <p class="text-center mb-3 fw-normal text-secondary">Si usted es una operadora de inamujer. Por favor, ingrese sus credenciales.</p>
             
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" name="user" id="user" placeholder="name@example.com">
+                <input type="text" class="form-control rounded-pill" name="user" id="user" placeholder="name@example.com">
                 <label class="text-primary" for="user">Usuario</label>
             </div>
 
             <div class="form-floating">
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                <input type="password" class="form-control rounded-pill" name="password" id="password" placeholder="Password">
                 <label class="text-primary" for="password">Contraseña</label>
             </div>
             
-            <div class="mt-3 text-end">
-                <button class="btn btn-primary rounded-pill px-5">Ingresar</button>
+            <div class="mt-3">
+                <button class="btn btn-primary rounded-pill w-100">Ingresar</button>
             </div>
         </form>
     </div>

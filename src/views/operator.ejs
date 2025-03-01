@@ -10,14 +10,6 @@
     <%- include('includes/head') %>
     <link rel="stylesheet" href="/css/msg.css">
 
-    <style>
-        .btn-chat, .btn-ws{
-            display: none;
-        }
-
-    </style>
-
-
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
 
@@ -200,7 +192,7 @@
                 <h4 class="fs-3 fw-light m-0 text-white">Salas</h4>
             </header>
 
-            <div class="h-100 border-end">
+            <div class="h-100 border-end pt-1">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action" data-channel="a">Sala 1</li>
                     <li class="list-group-item list-group-item-action" data-channel="b">Sala 2</li>
@@ -216,8 +208,6 @@
             <header class="bg-primary py-3 text-center">
                 <h4 class="fs-3 fw-light m-0 text-white">Conversación</h4>
             </header>
-
-            <p class="text-center border-bottom"><b>Nota:</b> Esta área es solo de pruebas. Pruebe enviar un mensaje.</p>
 
             <section id="chat-body" class="msg-panel d-flex flex-column p-3 border-bottom">
             </section>
