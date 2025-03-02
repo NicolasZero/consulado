@@ -1,14 +1,18 @@
 import express from 'express';
+
+// para el manejo de rutas
 import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
+
+// Socket io / websockets
 import { Server } from 'socket.io';
 import { createServer } from 'http';
-import sqlite from 'sqlite3'
 
+// Base de datos
+import sqlite from 'sqlite3'
 
 // Rutas
 import router from './routes/router.js';
-import { Socket } from 'dgram';
 
 // constantes
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -40,120 +44,49 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 //     console.log(rows);
 // })
 
+// process.loadEnvFile('.env')
+// const {PORT:port = 8080} = process.env;
+const port = 8080
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-const rooms = {}
-
-const socketMap = {}
 // websocket
+const socketMap = {};
 io.on('connection', (socket) => {
     console.log('a user connected: ', socket.id)
-    let socketRoom;
+    let socketRoom
 
-    socket.on('disconnect', () => {
-        console.log('user disconnected')
-    })
+    socket.on('disconnect', () => console.log(`user disconnected: ${socket.id}, ${socketMap[socket.id]}`))
 
-    // socket.on('join', (room) => {
-    //     socket.join(room)
-    //     socketRoom = room
     socket.on('join', (data) => {
-        socket.join(data.room)
-        socketRoom = data.room
-        // socketMap[socket.id] = data.username
-        console.log(`Socket: "${socket.id}" joined room: "${data.room}"`)
+        const {user, room} = data
+        socket.join(room)
+        socketRoom = room
+        socketMap[socket.id] = user
+        console.log(`User: "${user}" joined room: "${room}"`)
+        // console.log(`User: "${socket.id}" joined room: "${room}"`)
     })
-
-    // socket.on('chat', (data) => {
-    //     io.to(socketRoom).emit('chat', data.message);
-    // });
 
     socket.on('chat', (data) => {
-        io.to(socketRoom).emit('chat', {
-            username: data.user,
-            message: data.msg
-        });
-        console.log(`Enviado msg: ${data.msg} al room: ${socketRoom}`);
-        
-    });
+        io.to(socketRoom).emit('chat', {username: socketMap[socket.id], message: data.msg})
+        // console.log(`Enviado msg: ${data.msg} al room: ${data.room}`)
+        console.log(`Enviado msg: ${data.msg} al room: ${socketRoom}`)
+    })
 
-    // socket.on('room', (room) => {
-    //     console.log(`Socket: "${socket.id}" joined room: "${room}"`)
-    //     socket.join(room)
-    // })
-
-    // socket.on('chat', (data) => {
-    //     const {msg, room} = data
-    //     console.log(`msg: "${msg}", room: "${room}"`)
-    //     io.to(room).emit('chat', msg)
-    // })
-
-
-
-
-
-    // socket.on('room', (channel) => {
-    //     io.emit(channel)
-    // })
-
-    // socket.emit('rooms', io.sockets.adapter.rooms)
-    // socket.emit('rooms', rooms)
-
-    // socket.on('join room', ({room,username}) => {
-        // socket.join(room)
-        // socket.room = room
-
-        // si no existe la sala la creamos
-        // if (!rooms[room]) {
-        //     rooms[room] = {
-        //         admin: socket.id,
-        //         users: {}
-        //     }
-        // }
-
-        // agregamos el usuario a la sala
-        // rooms[room].users[socket.id] = {username}
-
-        // enviamos la lista de salas
-        // socket.emit('rooms', rooms)
-
-        // socket.emit('joined room', {room,username})
-    // })
-
-    // socket.on('change channel', (channel) => {
-    //     socket.join(`channel-${channel}`);
-    //     // console.log(channel);
-    // })
-
-    // socket.join('channel-1');
-
-    // socket.on('channel-1', (msg) => {
-    //     // socket.join(`channel-${channel}`);
-    //     // console.log(channel);
-    // })
-
-    // socket.on('chat message', (msg) => {
-    //     const username = socket.handshake.auth.username ?? 'anonymous'
-    //     // console.log({msg,username})
-    //     io.emit('chat message', {msg,username})
-    // })
+    socket.on('switch', (data) => {
+        const { prevRoom, nextRoom } = data;
+        if (prevRoom) socket.leave(prevRoom);
+        if (nextRoom) socket.join(nextRoom);
+        socketRoom = nextRoom;
+    })
 })
 
-// const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// process.loadEnvFile('.env')
-// const {PORT:port = 8080} = process.env;
-const port = 8080
-
-app.set('view engine', 'ejs');
-app.set('views', join(__dirname,'views'));
-app.use(express.static(join(__dirname,'public')));
+app.set('view engine', 'ejs'); //Definir que las vistas usan EJS
+app.set('views', join(__dirname,'views')); //Definir la ubicación de las vistas
+app.use(express.static(join(__dirname,'public'))); //Definir la ubicación de los archivos estáticos
 
 app.use(router);
 
-server.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}`);
-})
+server.listen(port, () => console.log(`Listening at http://localhost:${port}`))

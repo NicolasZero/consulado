@@ -66,9 +66,8 @@
             chat.scrollTop = chat.scrollHeight
         }
 
-        const formDetails = document.getElementById('form-details')
-
-        formDetails.addEventListener('submit', (e) => {
+        // Primer formulario
+        document.getElementById('form-details').addEventListener('submit', (e) => {
             e.preventDefault()
 
             const email = document.getElementById('email').value
@@ -88,11 +87,16 @@
 
 
             console.log({email, ic, name, lastname, message});
-            
-            // if (msg.value) {
-            //     socket.emit('chat message', msg.value)
-            //     msg.value = ''
-            // }
+        })
+
+        // Segundo formulario
+        document.getElementById('form-chat').addEventListener('submit', (e) => {
+            e.preventDefault()
+            const msg = document.getElementById('msg')
+            if (msg.value) {
+                // socket.emit('chat message', msg.value)
+                msg.value = ''
+            }
         })
 
     </script>
@@ -104,11 +108,12 @@
     <header class="text-center text-white bg-primary">
         <h1>Atencion en linea</h1>
     </header>
-    <main class="d-flex justify-content-center flex-fill bg-tertiary">
+
+    <main class="d-flex justify-content-center flex-fill bg-tertiary px-1">
         <section id="form" class="col-12 col-md-10 bg-body-tertiary my-4 rounded p-3" style="height: fit-content;">
             <p class="lead">Por favor ingrese sus datos</p>
             <form class="row" id="form-details">
-                <div class="col-6">
+                <div class="col-7 col-md-6">
                     <div class="form-floating mb-3">
                         <input required type="email" autocomplete="off" class="form-control" id="email" placeholder="name@example.com">
                         <label class="text-primary" for="email">Correo</label>
@@ -116,17 +121,17 @@
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-5 col-md-6">
                     <div class="form-floating mb-3">
                         <input required type="text" autocomplete="off" class="form-control" id="ic" placeholder="12345678" pattern="[0-9]{7,9}">
-                        <label class="text-primary" for="ic">Cédula de Identidad</label>
+                        <label class="text-primary" for="ic">Cédula</label>
                         <span class="invalid-feedback">Solo números de 7 a 9 digitos</span>
                     </div>
                 </div>
 
                 <div class="col-6">
                     <div class="form-floating mb-3">
-                        <input required type="text" maxlength="35" autocomplete="off" class="form-control" id="name" placeholder="Nombre" pattern="[A-Za-z 0-9]+">
+                        <input required type="text" maxlength="25" autocomplete="off" class="form-control" id="name" placeholder="Nombre" pattern="[A-Za-z 0-9]+">
                         <label class="text-primary" for="name">Primer nombre</label>
                         <span class="invalid-feedback">Ingrese caracteres</span>
                     </div>
@@ -134,14 +139,13 @@
 
                 <div class="col-6">
                     <div class="form-floating mb-3">
-                        <input required type="text" maxlength="35" autocomplete="off" class="form-control" id="lastname" placeholder="Apellido" pattern="[A-Za-z 0-9]+">
+                        <input required type="text" maxlength="25" autocomplete="off" class="form-control" id="lastname" placeholder="Apellido" pattern="[A-Za-z 0-9]+">
                         <label class="text-primary" for="lastname">Primer apellido</label>
                         <span class="invalid-feedback">Ingrese caracteres</span>
                     </div>
                 </div>
 
                 <hr>
-
                 <p class="lead">Por favor ingrese su consulta</p>
 
                 <div class="col-12">
@@ -156,6 +160,11 @@
                     <button type="submit" class="btn btn-primary rounded-pill px-5">Enviar</button>
                 </div>
             </form>
+        </section>
+
+        <section id="users" class="col-12 col-md-10 bg-body-tertiary d-none" style="height: fit-content;">
+            <div id="chat-body" class="msg-panel d-flex flex-column p-3 border-top border-bottom">
+            </div>
         </section>
 
         <section id="chat" class="col-12 col-md-10 bg-body-tertiary d-none" style="height: fit-content;">

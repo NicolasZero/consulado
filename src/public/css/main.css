@@ -78,6 +78,7 @@ textarea{
     white-space: -o-pre-wrap;
 }
 
+/* icono del boton del navbar */
 .navbar-toggler{
     color: var(--bs-primary);
     border-color: rgba(var(--bs-primary-rgb), 0.25);
@@ -88,9 +89,10 @@ textarea{
 }
 .navbar-toggler:focus {
     text-decoration: none;
-    outline: 0;
-    box-shadow: var(--bs-primary-box-shadow);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
 }
+
+
 
 :root, [data-bs-theme="light"]{
     --bs-tertiary: #f3cfe4;

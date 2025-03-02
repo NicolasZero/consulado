@@ -13,56 +13,10 @@
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
 
-        // const username = 'Operator'
-        // const socket = io(
-        //     {
-        //         auth:{
-        //             username: username
-        //         }
-        //     }
-        // );
-
         const form = document.getElementById('form')
-        // const chat = document.getElementById('chat-body')
-        
-        // socket.on('chat message', (msg) => {
-        //     const div = document.createElement('div')
-        //     if (msg.username === username) {
-        //         div.classList.add('msg', 'msg-own')
-        //         div.innerHTML = `<span>Yo</span><p>${msg.msg}</p>`
-        //     }else{
-        //         div.classList.add('msg', 'msg-other')
-        //         div.innerHTML = `<span>${msg.username}</span><p>${msg.msg}</p>`
-        //     }
-        //     chat.appendChild(div)
-        //     chat.scrollTop = chat.scrollHeight
-        // })
 
-        // form.addEventListener('submit', (e) => {
-        //     e.preventDefault()
-        //     const msg = document.getElementById('msg')
-        //     if (msg.value) {
-        //         socket.emit('chat message', msg.value)
-        //         msg.value = ''
-        //     }
-        // })
-
-        // socket.on('join', (msg) => {
-        //     console.log(msg);
-        // })
-
-        // socket.on('rooms', (rooms) => {
-        //     console.log(rooms);
-        // })
-
-        // const changeChannel = (channel) => {
-        //     // socket.join(`channel-${channel}`)
-        //     socket.emit('join', channel)
-        //     console.log('Solicitar unirse');
-        // }
-        
-
-        const printMsg = (data) =>{
+        // Funcion para imprimir mensajes
+        const printMsg = (data) => {
             const chat = document.getElementById('chat-body')
             const div = document.createElement('div')
             if (data.username === user) {
@@ -76,108 +30,113 @@
             chat.scrollTop = chat.scrollHeight
         }
 
+        // Variables
+        let socket
+        let roomSelected = null
         let chat = []
+        let user = document.getElementById('user').value
+        let start = false
 
+        // Seleccionar usuario
+        document.getElementById('user').addEventListener('change', (e) => user = e.target.value)
+
+        // Funcion para cambiar de sala, limpiar el chat
         document.querySelector('.list-group').addEventListener('click', (e) => {
-        //    e.preventDefault()
-        //    console.log(e.target.dataset.channel)
-            initiateSocket(e.target.dataset.channel)
+            document.getElementById('chat-body').innerHTML = '' // limpiar el chat
+
+            const room = e.target.dataset.channel
+
+            // Para evitar que se dupliquen las salas
+            if (roomSelected === room) return console.log('Ya estas en esa sala')
+
+            // Cambiar o iniciar la sala
+            if (roomSelected) {
+                switchRooms(roomSelected, room)
+            }else{
+                initiateSocket(room) // iniciar la sala con el nombre de la sala
+            }
+
+            roomSelected = room
 
             // Para darle estilos
-            // console.log(e.target.classList.contains('active'));
-            // console.log(e.target.classList.contains('active'));
             if (document.querySelector('.list-group-item.active')) {document.querySelector('.list-group-item.active').classList.remove('active')}
             e.target.classList.add('active')
 
-            document.getElementById('chat-body').innerHTML = ''
-            
-            // ==================
+            // unirse a la sala de chat si no esta conectado (una sola vez)
+            if (!start) {
+                console.log('Iniciando conexión...');
+                
+                subscribeToChat((err, data) => {
+                    if (err) {return}
+                    // chat = [data, ...chat]
+                    printMsg(data)
+                    // console.log(`Historial del chat: ${chat}`);
+                })
 
-            subscribeToChat((err, data) => {
-                if (err) {
-                    console.log({err});
-                    return
-                }
-                chat = [data, ...chat]
-                printMsg(data)
-            })
-            return () => {
-                disconnectSocket();
+                start = true
+            }else{
+                console.log('Ya estas conectado');
             }
+            // return () => {
+            //     disconnectSocket();
+            // }
         })
 
+        // Funcion para llamar a la funcion de desconectarce de la sala
         document.querySelector('.disconnect').addEventListener('click', (e) => {
-            // Para darle estilos
             if (document.querySelector('.list-group-item.active')) {document.querySelector('.list-group-item.active').classList.remove('active')}
-            // ==================
-
             disconnectSocket()
         })
 
-        let socket
-        let roomSelected = ''
-        const rooms = ['a','b','c','d'] //No se usa pero es para referencia
+        // Funcion para cambiar de sala
+        const switchRooms = (prevRoom, nextRoom) => {
+            if (socket) socket.emit('switch', { prevRoom, nextRoom })
+        }
 
+        // Funcion para iniciar la sala
         const initiateSocket = (room) => {
-            if (roomSelected === room) {
-                return
-            }
-            roomSelected = room
             socket = io()
             if (socket && room) {
-                socket.emit('join',{room})
-                console.log('Socket iniciado');
+                socket.emit('join',{room, user})
+                console.log('Socket iniciado')
             }
         }
 
+        // Funcion para desconectarse de la sala
         const disconnectSocket = () => {
             if(socket) {
                 socket.disconnect()
-                roomSelected = ''
-                console.log('Socket desconectado');
+                roomSelected = null
+                console.log('Socket desconectado')
             };
         }
 
+        // Funcion para escuchar los mensajes
         const subscribeToChat = (cb) => {
-            if (!socket) {return(true)};
+            if (!socket) return console.log('Socket no iniciado')
+            console.log('Escuchando...');
+            
             socket.on('chat', msg => {
                 console.log('Websocket evento recivido!');
-                console.log(msg);
-                
-                return cb(null, msg);
-            });
+                return cb(null, msg)
+            })
         }
-
-        let user = document.getElementById('user').value
-
-        document.getElementById('user').addEventListener('change', (e) => {
-            user = e.target.value
-            console.log(user);
-            
-        })
         
-        const sendMessage = (room, msg) => {
-            if (!socket || !msg || !room) {
-                return(false)
-            }
-            if (socket) socket.emit('chat', { msg, room, user });
+        // Funcion para enviar mensajes
+        const sendMessage = (msg) => {
+            if (socket) {socket.emit('chat', { msg })}
         }
 
+        // Llama a la funcion de enviar mensajes
         form.addEventListener('submit', (e) => {
             e.preventDefault()
             const msg = document.getElementById('msg')
-            // if (msg.value) {
-            //     socket.emit('chat message', msg.value)
-            //     msg.value = ''
-            // }
-            // console.log(msg.value, roomSelected);
             
             if (msg.value && roomSelected) {
-                sendMessage(roomSelected,msg.value)
+                sendMessage(msg.value)
             }
             msg.value = ''
         })
-
     </script>
 </head>
 
@@ -186,13 +145,13 @@
 
     <main class="p-0 row m-0 px-1 px-md-3 justify-content-center bg-tertiary">
 
-        <!-- sidebar -->
+        <!-- sidebar - salas -->
         <aside class="col p-0 bg-body-tertiary">
             <header class="bg-primary py-3 text-center">
                 <h4 class="fs-3 fw-light m-0 text-white">Salas</h4>
             </header>
 
-            <div class="h-100 border-end pt-1">
+            <div class="h-100 border-top border-end">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action" data-channel="a">Sala 1</li>
                     <li class="list-group-item list-group-item-action" data-channel="b">Sala 2</li>
