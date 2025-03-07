@@ -15,6 +15,7 @@
 
         const form = document.getElementById('form')
 
+        
         // Funcion para imprimir mensajes
         const printMsg = (data) => {
             const chat = document.getElementById('chat-body')
@@ -31,11 +32,28 @@
         }
 
         // Variables
-        let socket
+        const socket = io()
         let roomSelected = null
         let chat = []
         let user = document.getElementById('user').value
         let start = false
+
+        const reloadRooms = () => {
+            socket.emit('rooms')
+        }
+
+        // socket = io()
+        if (socket) {
+            reloadRooms()
+            socket.on('rooms', data => {
+                console.log(data);
+            })
+        }
+
+        
+
+        document.getElementById('reload').addEventListener('click', reloadRooms)
+
 
         // Seleccionar usuario
         document.getElementById('user').addEventListener('change', (e) => user = e.target.value)
@@ -119,7 +137,6 @@
 
         // Funcion para iniciar la sala
         const initiateSocket = (room) => {
-            socket = io()
             if (socket && room) {
                 socket.emit('join',{room, user})
                 console.log('Socket iniciado')
@@ -173,7 +190,7 @@
         <!-- sidebar - salas -->
         <aside class="bg-body-tertiary" style="width: 100vw;">
             <header class="bg-primary d-flex align-items-center justify-content-center" style="height: calc(3rem + 0.6vw);">
-                <h4 class="fs-3 fw-light m-0 text-white">Panel de Mensajes</h4>
+                <h4 class="fs-3 fw-light m-0 text-white">Panel de Mensajes <i id="reload" class="cursor-pointer p-3 bi bi-arrow-clockwise"></i></h4>
             </header>
 
             <div class="pt-1 border-end border-start msg-panel">
@@ -215,6 +232,7 @@
                         Nicol Luna - 28076013
                     </li> -->
                 </ul>
+                <button class="d-none btn btn-secondary mx-3 disconnect">Desconectar</button>
             </div>
         </aside>
 
@@ -234,6 +252,7 @@
                     <i class="bi bi-send-fill text-secondary"></i>
                 </button>
                 <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
+                <div class="d-none">
                 <div class="d-none">
                     <select class="form-select" name="channel" id="user">
                         <option value="Angela">Angela</option>

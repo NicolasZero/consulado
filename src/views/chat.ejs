@@ -52,7 +52,7 @@
         //     console.log(channel);
         // }
 
-        let socket
+        const socket = io()
 
 
         const printMsg = (data,user) =>{
@@ -84,6 +84,7 @@
             printMsg({username: 'Bot', message: botMsg}, name)
             printMsg({username: name, message},name)
 
+            socket.emit('room', {email, ic, name, lastname, message})
             document.getElementById('form').classList.add('d-none')
             document.getElementById('chat').classList.remove('d-none')
 
