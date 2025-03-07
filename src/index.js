@@ -13,6 +13,7 @@ import sqlite from 'sqlite3'
 
 // Rutas
 import router from './routes/router.js';
+import { Socket } from 'dgram';
 
 // constantes
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -54,11 +55,19 @@ const io = new Server(server);
 
 // websocket
 const socketMap = {};
+const rooms = {}
 io.on('connection', (socket) => {
     console.log('a user connected: ', socket.id)
     let socketRoom
 
-    socket.on('disconnect', () => console.log(`user disconnected: ${socket.id}, ${socketMap[socket.id]}`))
+    socket.on('disconnect', () => {
+        console.log(`user disconnected: ${socket.id}, ${socketMap[socket.id]}`)
+        delete socketMap[socket.id]
+    })
+
+    socket.on('rooms', () => {
+        socket.emit('rooms', rooms)
+    })
 
     socket.on('join', (data) => {
         const {user, room} = data
@@ -68,6 +77,20 @@ io.on('connection', (socket) => {
         console.log(`User: "${user}" joined room: "${room}"`)
         // console.log(`User: "${socket.id}" joined room: "${room}"`)
     })
+
+    socket.on('room', (data)=>{
+        const {ic} = data
+        socketRoom = ic
+        socket.join(ic)
+        rooms[ic] = data
+        io.emit('rooms', {email, ic, name, lastname, message})
+    })
+
+    // socket.on('leave', (data) => {
+    //     const {user, room} = data
+    //     socket.leave(room)
+    //     console.log(`User: "${user}" left room: "${room}"`)
+    // })
 
     socket.on('chat', (data) => {
         io.to(socketRoom).emit('chat', {username: socketMap[socket.id], message: data.msg})

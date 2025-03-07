@@ -15,6 +15,7 @@
 
         const form = document.getElementById('form')
 
+        
         // Funcion para imprimir mensajes
         const printMsg = (data) => {
             const chat = document.getElementById('chat-body')
@@ -31,11 +32,28 @@
         }
 
         // Variables
-        let socket
+        const socket = io()
         let roomSelected = null
         let chat = []
         let user = document.getElementById('user').value
         let start = false
+
+        const reloadRooms = () => {
+            socket.emit('rooms')
+        }
+
+        // socket = io()
+        if (socket) {
+            reloadRooms()
+            socket.on('rooms', data => {
+                console.log(data);
+            })
+        }
+
+        
+
+        document.getElementById('reload').addEventListener('click', reloadRooms)
+
 
         // Seleccionar usuario
         document.getElementById('user').addEventListener('change', (e) => user = e.target.value)
@@ -71,6 +89,7 @@
                     // chat = [data, ...chat]
                     printMsg(data)
                     // console.log(`Historial del chat: ${chat}`);
+                    // return cb(null, msg)
                 })
 
                 start = true
@@ -95,7 +114,6 @@
 
         // Funcion para iniciar la sala
         const initiateSocket = (room) => {
-            socket = io()
             if (socket && room) {
                 socket.emit('join',{room, user})
                 console.log('Socket iniciado')
@@ -148,17 +166,18 @@
         <!-- sidebar - salas -->
         <aside class="col p-0 bg-body-tertiary">
             <header class="bg-primary py-3 text-center">
-                <h4 class="fs-3 fw-light m-0 text-white">Salas</h4>
+                <h4 class="fs-3 fw-light m-0 text-white">Salas <i id="reload" class="cursor-pointer p-3 bi bi-arrow-clockwise"></i></h4>
             </header>
 
             <div class="h-100 border-top border-end">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action" data-channel="a">Sala 1</li>
+                <ul id="rooms" class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-action" data-channel="28076011">Nicolas Zapata</li>
+                    <!-- <li class="list-group-item list-group-item-action" data-channel="a">Sala 1</li>
                     <li class="list-group-item list-group-item-action" data-channel="b">Sala 2</li>
                     <li class="list-group-item list-group-item-action" data-channel="c">Sala 3</li>
-                    <li class="list-group-item list-group-item-action" data-channel="d">Sala 4</li>
+                    <li class="list-group-item list-group-item-action" data-channel="d">Sala 4</li> -->
                 </ul>
-                <button class="btn btn-secondary mx-3 disconnect">Desconectar</button>
+                <button class="d-none btn btn-secondary mx-3 disconnect">Desconectar</button>
             </div>
         </aside>
 
@@ -176,7 +195,7 @@
                     <i class="bi bi-send-fill text-secondary"></i>
                 </button>
                 <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
-                <div>
+                <div class="d-none">
                     <select class="form-select" name="channel" id="user">
                         <option value="Angela">Angela</option>
                         <option value="Rebeca">Rebeca</option>
