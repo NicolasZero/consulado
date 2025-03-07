@@ -1,9 +1,24 @@
-.animation {
-    animation: change linear forwards;
+/* 1 - Aparecer al hacer scroll */
+.animation-img {
+    animation: change1 linear forwards;
     animation-timeline: view(block 100% auto);
 }
 
-@keyframes change {
+@keyframes change1 {
     from { scale: 50%; opacity: 0% }
     to { scale: 100%; opacity: 100%; }
+}
+
+.hu{
+    transform: translate(-50%);
+    transition-property: transform;
+    transition-duration: .3s;
+    transition-timing-function: linear;
+}
+
+main>div:not(.hu){
+    transform: translate(0%);
+    transition-property: transform;
+    transition-duration: .3s;
+    transition-timing-function: linear;
 }

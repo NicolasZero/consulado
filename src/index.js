@@ -56,9 +56,14 @@ const io = new Server(server);
 const socketMap = {};
 io.on('connection', (socket) => {
     console.log('a user connected: ', socket.id)
+    console.log(socketMap);
     let socketRoom
 
-    socket.on('disconnect', () => console.log(`user disconnected: ${socket.id}, ${socketMap[socket.id]}`))
+    socket.on('disconnect', () => {
+        console.log(`user disconnected: ${socket.id}, ${socketMap[socket.id]}`)
+        delete socketMap[socket.id]
+        console.log(socketMap);
+    })
 
     socket.on('join', (data) => {
         const {user, room} = data
@@ -80,6 +85,7 @@ io.on('connection', (socket) => {
         if (prevRoom) socket.leave(prevRoom);
         if (nextRoom) socket.join(nextRoom);
         socketRoom = nextRoom;
+        console.log(`Switched room from ${prevRoom} to ${nextRoom}`);
     })
 })
 
