@@ -52,6 +52,9 @@
         //     console.log(channel);
         // }
 
+        let socket
+
+
         const printMsg = (data,user) =>{
             const chat = document.getElementById('chat-body')
             const div = document.createElement('div')
@@ -76,18 +79,25 @@
             const lastname = document.getElementById('lastname').value
             const message = document.getElementById('message').value
             
-
-            document.getElementById('form').classList.add('d-none')
-            document.getElementById('chat').classList.remove('d-none')
-
             const botMsg = `Bienvenida ${name} ${lastname}. Por favor espere un momento, estamos atendiendo su solicitud...`
 
             printMsg({username: 'Bot', message: botMsg}, name)
             printMsg({username: name, message},name)
 
+            document.getElementById('form').classList.add('d-none')
+            document.getElementById('chat').classList.remove('d-none')
 
             console.log({email, ic, name, lastname, message});
         })
+
+        // Funcion para iniciar la sala
+        const initiateSocket = (room) => {
+            socket = io()
+            if (socket && room) {
+                socket.emit('join',{room, user})
+                console.log('Socket iniciado')
+            }
+        }
 
         // Segundo formulario
         document.getElementById('form-chat').addEventListener('submit', (e) => {
@@ -163,11 +173,12 @@
         </section>
 
         <section id="chat" class="col-12 col-md-10 bg-body-tertiary d-none" style="height: fit-content;">
+            
             <div id="chat-body" class="msg-panel d-flex flex-column p-3 border-top border-bottom">
             </div>
 
             <form class="input-group p-3" id="form-chat">
-                <button class="input-group-text" id="basic-addon1">
+                <button class="input-group-text">
                     <i class="bi bi-send-fill text-secondary"></i>
                 </button>
                 <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
