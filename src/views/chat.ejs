@@ -13,49 +13,13 @@
 
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
-        // const username = 'Anonymous'
-        // const socket = io(
-        //     {
-        //         auth:{
-        //             username: username
-        //         }
-        //     }
-        // );
-
-        // const form = document.getElementById('form')
-        // const chat = document.getElementById('chat-body')
         
-        // socket.on('chat message', (msg) => {
-        //     const div = document.createElement('div')
-        //     if (msg.username === username) {
-        //         div.classList.add('msg', 'msg-own')
-        //         div.innerHTML = `<span>Yo</span><p>${msg.msg}</p>`
-        //     }else{
-        //         div.classList.add('msg', 'msg-other')
-        //         div.innerHTML = `<span>${msg.username}</span><p>${msg.msg}</p>`
-        //     }
-        //     chat.appendChild(div)
-        //     chat.scrollTop = chat.scrollHeight
-        // })
+        // variables
+        let socket
+        let user
 
-        // form.addEventListener('submit', (e) => {
-        //     e.preventDefault()
-        //     const msg = document.getElementById('msg')
-        //     if (msg.value) {
-        //         socket.emit('chat message', msg.value)
-        //         msg.value = ''
-        //     }
-        // })
-
-        // const changeChannel = (channel) => {
-        //     // socket.emit('join',`channel-${channel}`);
-        //     console.log(channel);
-        // }
-
-        const socket = io()
-
-
-        const printMsg = (data,user) =>{
+        // Funcion para imprimir mensajes
+        const printMsg = (data) =>{            
             const chat = document.getElementById('chat-body')
             const div = document.createElement('div')
             if (data.username === user) {
@@ -66,8 +30,15 @@
                 div.innerHTML = `<span>${data.username}</span><p>${data.message}</p>`
             }
             chat.appendChild(div)
-            chat.scrollTop = chat.scrollHeight
+            // chat.scrollTop = chat.scrollHeight
         }
+
+        // Funcion para iniciar la sala
+        const initiateSocket = (auth) => {
+            socket = io({auth})
+            console.log('Socket iniciado')
+        }
+
 
         // Primer formulario
         document.getElementById('form-details').addEventListener('submit', (e) => {
@@ -81,34 +52,57 @@
             
             const botMsg = `Bienvenida ${name} ${lastname}. Por favor espere un momento, estamos atendiendo su solicitud...`
 
-            printMsg({username: 'Bot', message: botMsg}, name)
-            printMsg({username: name, message},name)
+            user = name
+
+            printMsg({username: 'Bot', message: botMsg})
+            printMsg({username: name, message})
+
+            if (!socket) {
+                const data =  { username : name, ic : ic }
+                initiateSocket(data)
+            }
 
             socket.emit('room', {email, ic, name, lastname, message})
+            console.log("Mensaje enviado:",{email, ic, name, lastname, message})
+
+            // cambiar de formulario
             document.getElementById('form').classList.add('d-none')
             document.getElementById('chat').classList.remove('d-none')
 
-            console.log({email, ic, name, lastname, message});
+            subscribeToChat((err, data) => {
+                if (err) {return}
+                // chat = [data, ...chat]
+                printMsg(data)
+                // console.log(`Historial del chat: ${chat}`);
+            })
         })
 
-        // Funcion para iniciar la sala
-        const initiateSocket = (room) => {
-            socket = io()
-            if (socket && room) {
-                socket.emit('join',{room, user})
-                console.log('Socket iniciado')
-            }
-        }
-
+       
         // Segundo formulario
         document.getElementById('form-chat').addEventListener('submit', (e) => {
             e.preventDefault()
             const msg = document.getElementById('msg')
             if (msg.value) {
                 // socket.emit('chat message', msg.value)
+                sendMessage(msg.value)
                 msg.value = ''
             }
         })
+
+        const sendMessage = (msg) => {
+            if (socket) {socket.emit('chat', msg )}
+        }
+
+        // Funcion para escuchar los mensajes
+        const subscribeToChat = (cb) => {
+            if (!socket) return console.log('Socket no iniciado')
+            console.log('Escuchando...');
+            
+            socket.on('chat', msg => {
+                console.log('Websocket chat recivido!');
+                return cb(null, msg)
+            }) 
+        }
 
     </script>
 </head>
@@ -175,7 +169,7 @@
 
         <section id="chat" class="col-12 col-md-10 bg-body-tertiary d-none" style="height: fit-content;">
             
-            <div id="chat-body" class="msg-panel d-flex flex-column p-3 border-top border-bottom">
+            <div id="chat-body" class="msg-panel p-3 border-top border-bottom">
             </div>
 
             <form class="input-group p-3" id="form-chat">

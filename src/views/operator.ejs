@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
-<!-- https://tincode.es/blog/manejo-de-salas-con-socket-io-y-react-hooks -->
+    <!-- https://www.consulado.gob.cl/consulado-contigo -->
+    <!-- https://tincode.es/blog/manejo-de-salas-con-socket-io-y-react-hooks -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,77 +29,94 @@
                 div.innerHTML = `<span>${data.username}</span><p>${data.message}</p>`
             }
             chat.appendChild(div)
-            chat.scrollTop = chat.scrollHeight
+            // chat.scrollTop = chat.scrollHeight
         }
 
         // Variables
-        const socket = io()
+        const socket = io({
+            auth: {
+                username: 'Operadora',
+                ic: '0'
+            }
+        })
+
+        if (socket) {
+            console.log('Socket iniciado')
+        }
+
         let roomSelected = null
         let chat = []
-        let user = document.getElementById('user').value
+        const user = "Operadora"
         let start = false
+        let rooms
 
         const reloadRooms = () => {
-            socket.emit('rooms')
+            socket.emit('rooms', 'all')
         }
 
-        // socket = io()
         if (socket) {
-            reloadRooms()
+            // socket.on('user', data => console.log(data))
             socket.on('rooms', data => {
+                // if (data) return
                 console.log(data);
+                rooms = data
+                list.innerHTML = ''
+                const list = document.querySelector('.list-group')
+                let a = 1
+                for (let clave in data){
+                    // console.log("valor: ",data[clave]);
+                    const room = data[clave]
+                    // console.log(a);
+                    // a++
+                    const li = document.createElement('li')
+                    li.classList.add('list-group-item')
+                    li.dataset.channel = room.ic
+                    li.dataset.name = `${room.name} ${room.lastname}`
+                    li.innerHTML = `${room.name} ${room.lastname}`
+                    list.appendChild(li)
+                }
+                // data.forEach(room => {
+                // })
             })
+            reloadRooms()
         }
 
-        
+        const printRooms = ({name, lastname, ic}) => {
+            const li = document.createElement('li')
+            li.classList.add('list-group-item')
+            li.dataset.channel = room.ic
+            li.dataset.name = `${room.name} ${room.lastname}`
+            li.innerHTML = `${room.name} ${room.lastname}`
+            list.appendChild(li)
+        }
 
-        document.getElementById('reload').addEventListener('click', reloadRooms)
+        document.querySelector('.reload').addEventListener('click', reloadRooms)
 
-
-        // Seleccionar usuario
-        document.getElementById('user').addEventListener('change', (e) => user = e.target.value)
 
         // Funcion para cambiar de sala, limpiar el chat
         document.querySelector('.list-group').addEventListener('click', (e) => {
             document.getElementById('chat-body').innerHTML = '' // limpiar el chat
 
+            document.querySelector('.msg-box').classList.add('scroll')
+            document.querySelector('.back').classList.remove('d-none')
+
             const room = e.target.dataset.channel
             const title = e.target.dataset.name
 
-            document.getElementById('title').textContent = title
+            // Verifica que existe la sala
+            if (!room || !title) return console.log('Sala no valida')
 
-            // if (document.querySelector('section')) {
-                // document.querySelector('section').classList.remove('d-none')
-                // document.querySelector('aside').classList.add('d-none')
-            // }
-            document.querySelector('main>div').classList.add('hu')
-
-
-            if (!room) return
-
-            console.log({roomPrev:roomSelected,room,title});
-            
-            // eliminar despues
-            roomSelected = room
-            if (document.querySelector('.list-group-item.active')) {
-                document.querySelector('.list-group-item.active').classList.remove('active')
-            }
-            e.target.classList.add('active')
-
-            return
-            // 
-            
-
-            // Para evitar que se dupliquen las salas
+            // Para evitar que se dupliquen las salas, verifica que no se haya seleccionado esa sala
             if (roomSelected === room) return console.log('Ya estas en esa sala')
 
             // Cambiar o iniciar la sala
             if (roomSelected) {
+                // Si roomSelected existe, cambia la sala
                 switchRooms(roomSelected, room)
-                console.log('Socket cambiado');
+                console.log('Sala cambiada');
             }else{
-                // iniciar el socket
-                initiateSocket(room) 
+                // Si roomSelected no existe, Se une a la sala
+                join(room) 
 
                 subscribeToChat((err, data) => {
                     if (err) {return}
@@ -106,26 +124,30 @@
                     printMsg(data)
                     // console.log(`Historial del chat: ${chat}`);
                 })
-
-                socket.on('rooms', rooms => {
-                    console.log('Websocket rooms recivido!');
-                    console.log(rooms);
-                })
             }
 
             roomSelected = room
+
+            // Cargar los mensajes
+            printMsg(rooms[room])
 
             // Para darle estilos
             if (document.querySelector('.list-group-item.active')) {
                 document.querySelector('.list-group-item.active').classList.remove('active')
             }
             e.target.classList.add('active')
+
+            // Cambiar el titulo
+            document.getElementById('title').innerHTML = title
         })
 
         // Funcion para llamar a la funcion de desconectarce de la sala
-        document.querySelector('.disconnect').addEventListener('click', (e) => {
-            if (document.querySelector('.list-group-item.active')) {document.querySelector('.list-group-item.active').classList.remove('active')}
-            document.querySelector('main>div').classList.remove('hu')
+        document.querySelector('.back').addEventListener('click', (e) => {
+            if (document.querySelector('.list-group-item.active')) {
+                document.querySelector('.list-group-item.active').classList.remove('active')
+            }
+            document.querySelector('.msg-box').classList.remove('scroll')
+            document.querySelector('.back').classList.add('d-none')
             
             // disconnectSocket()
         })
@@ -136,10 +158,9 @@
         }
 
         // Funcion para iniciar la sala
-        const initiateSocket = (room) => {
+        const join = (room) => {
             if (socket && room) {
-                socket.emit('join',{room, user})
-                console.log('Socket iniciado')
+                socket.emit('join',room)
             }
         }
 
@@ -165,7 +186,7 @@
         
         // Funcion para enviar mensajes
         const sendMessage = (msg) => {
-            if (socket) {socket.emit('chat', { msg })}
+            if (socket) {socket.emit('chat', msg)}
         }
 
         // Llama a la funcion de enviar mensajes
@@ -184,90 +205,50 @@
 <body>
     <%- include('includes/nav') %>
     <!-- <button onclick="document.querySelector('main>div').classList.toggle('hu')">click</button> -->
-    <main class="bg-tertiary" style="width: 100%; overflow: hidden;">
-        <div style="width: calc(100vw*2); display: flex; flex-wrap:nowrap;">
+    <main class="bg-tertiary px-0 px-md-3" style="overflow: hidden;">
+        <div class="msg-box">
+            <!-- sidebar - salas -->
+            <aside class="bg-body-tertiary">
+                <header class="bg-primary text-center">
+                    <h4 class="fs-3 fw-light m-0 text-white">
+                        Panel de Mensajes <i class="reload btn btn-primary bi bi-arrow-clockwise"></i>
+                    </h4>
+                </header>
 
-        <!-- sidebar - salas -->
-        <aside class="bg-body-tertiary" style="width: 100vw;">
-            <header class="bg-primary d-flex align-items-center justify-content-center" style="height: calc(3rem + 0.6vw);">
-                <h4 class="fs-3 fw-light m-0 text-white">Panel de Mensajes <i id="reload" class="cursor-pointer p-3 bi bi-arrow-clockwise"></i></h4>
-            </header>
-
-            <div class="pt-1 border-end border-start msg-panel">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action" data-name="Nicolas Zapata" data-channel="a">
-                        Nicolas Zapata - 28076011
-                    </li>
-                    <!-- <li class="list-group-item list-group-item-action" data-name="Sara Herrera" data-channel="b">
-                        Sara Herrera - 28076010
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Elizabeth Flores" data-channel="c">
-                        Elizabeth Flores - 28076012
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Nicol Luna" data-channel="d">
-                        Nicol Luna - 28076013
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Nicolas Zapata" data-channel="e">
-                        Nicolas Zapata - 28076011
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Sara Herrera" data-channel="f">
-                        Sara Herrera - 28076010
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Elizabeth Flores" data-channel="g">
-                        Elizabeth Flores - 28076012
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Nicol Luna" data-channel="h">
-                        Nicol Luna - 28076013
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Nicolas Zapata" data-channel="i">
-                        Nicolas Zapata - 28076011
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Sara Herrera" data-channel="j">
-                        Sara Herrera - 28076010
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Elizabeth Flores" data-channel="k">
-                        Elizabeth Flores - 28076012
-                    </li>
-                    <li class="list-group-item list-group-item-action" data-name="Nicol Luna" data-channel="l">
-                        Nicol Luna - 28076013
-                    </li> -->
-                </ul>
-                <button class="d-none btn btn-secondary mx-3 disconnect">Desconectar</button>
-            </div>
-        </aside>
-
-        <!-- chat -->
-        <section class="bg-body-tertiary" style="width: 100vw;">
-            <header class="bg-primary d-flex align-items-center px-2" style="height: calc(3rem + 0.6vw);">
-                <button class="btn btn-primary disconnect fs-6 d-block d-md-none"><i class="bi bi-arrow-left"></i></button>
-                <h4 class="fw-light fs-3 m-0 text-white flex-fill" id="title"></h4>
-                <!-- <button class="btn btn-primary mx-3 disconnect">Desconectar</button> -->
-            </header>
-
-            <section id="chat-body" class="msg-panel d-flex flex-column p-3 border-bottom justify-content-end">
-            </section>
-
-            <form class="input-group p-3" id="form">
-                <button class="input-group-text">
-                    <i class="bi bi-send-fill text-secondary"></i>
-                </button>
-                <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
-                <div class="d-none">
-                <div class="d-none">
-                    <select class="form-select" name="channel" id="user">
-                        <option value="Angela">Angela</option>
-                        <option value="Rebeca">Rebeca</option>
-                        <option value="Elizabeth">Elizabeth</option>
-                        <option value="Carlos">Carlos</option>
-                    </select>
+                <div class="pt-1 border-end border-start msg-panel">
+                    <ul class="list-group list-group-flush">
+                        <!-- <li class="list-group-item list-group-item-action" data-name="Nicolas Zapata" data-channel="28076011">
+                            <i class="bi bi-person-circle"></i> Nicolas Zapata <span class="badge text-bg-secondary">4</span>
+                        </li>
+                        <li class="list-group-item list-group-item-action" data-name="Maria Zapata" data-channel="28076012">
+                            <i class="bi bi-person-circle"></i> Maria Zapata <span class="badge text-bg-secondary">4</span>
+                        </li> -->
+                        <!-- <p>No hay mensajes</p> -->
+                    </ul>
                 </div>
-            </form>
-        </section>
-    </div>
+            </aside>
 
+            <!-- chat -->
+            <section class="bg-body-tertiary">
+                <header class="bg-primary px-2">
+                    <h4 class="fw-light fs-3 m-0 text-white">
+                        <i class="btn btn-primary back bi bi-arrow-left d-none"></i>
+                        <span id="title"></span>
+                    </h4>
+                </header>
+
+                <section id="chat-body" class="msg-panel p-3 border-bottom">
+                </section>
+
+                <form class="input-group p-3" id="form">
+                    <button class="input-group-text">
+                        <i class="bi bi-send-fill text-secondary"></i>
+                    </button>
+                    <input type="text" class="form-control" placeholder="Enviar un mensaje" name="msg" id="msg">
+                </form>
+            </section>
+        </div>
     </main>
-
     <%- include('includes/footer') %>
 </body>
-
 </html>

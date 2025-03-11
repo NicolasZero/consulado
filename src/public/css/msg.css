@@ -1,9 +1,56 @@
+.msg-box{
+    display: flex;
+    /* flex-wrap:nowrap; */
+    width: calc(100%*2);
+    @media (width >= 768px) {
+        width: 100%;
+    }
+}
+.msg-box > * {
+    width: 100%;
+}
+@media (width >= 768px) {
+    .msg-box aside {
+        width: calc(50% + 50px);
+    }
+}
+
+.msg-box > * > header {
+    height: calc(3rem + 0.6vw); 
+    align-content: center;
+}
+
+.scroll{
+    @media (width < 768px) {
+        transform: translate(-50%);
+        transition-property: transform;
+        transition-duration: .3s;
+        transition-timing-function: linear;
+    }
+}
+
+.msg-box:not(.scroll){
+    @media (width < 768px) {
+        transform: translate(0%);
+        transition-property: transform;
+        transition-duration: .3s;
+        transition-timing-function: linear;
+    }
+}
+
 /* panel de mensajes */
 .msg-panel {
     overflow-y: scroll;
     scroll-behavior: smooth;
-    min-height: 200px;
+    min-height: 60px;
     height: calc(60vh + 50px);
+    display: flex;
+    flex-direction: column;
+}
+
+#chat-body > :first-child {
+    margin-top: auto !important;
+    /* use !important to prevent breakage from child margin settings */
 }
 
 /* Mensajes */

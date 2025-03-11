@@ -14,6 +14,9 @@ import sqlite from 'sqlite3'
 // Rutas
 import router from './routes/router.js';
 import { Socket } from 'dgram';
+import { sourceMapsEnabled } from 'process';
+
+import {allOptions, roles} from './const/const.js'
 
 // constantes
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -56,35 +59,48 @@ const io = new Server(server);
 // websocket
 const socketMap = {};
 const rooms = {}
+// const users = {}
 io.on('connection', (socket) => {
     console.log('a user connected: ', socket.id)
-    console.log(socketMap);
+    // console.log(socket.handshake.auth)
     let socketRoom
 
     socket.on('disconnect', () => {
-        console.log(`user disconnected: ${socket.id}, ${socketMap[socket.id]}`)
-        delete socketMap[socket.id]
+        console.log(`user disconnected: ${socket.id}`)
+        console.log(socket.handshake.auth)
+        // if (socket.handshake.auth.roles !== roles.) {
+            
+        // }
+        // delete rooms
     })
 
-    socket.on('rooms', () => {
-        socket.emit('rooms', rooms)
+    socket.on('rooms', (params) => {
+        // console.log(params);
+        if (params === allOptions) {
+            socket.emit('rooms', rooms)
+        }
     })
 
-    socket.on('join', (data) => {
-        const {user, room} = data
+    socket.on('join', (room) => {
+        const user = socket.handshake.auth.username
         socket.join(room)
         socketRoom = room
-        socketMap[socket.id] = user
+        // socketMap[socket.id] = user
         console.log(`User: "${user}" joined room: "${room}"`)
         // console.log(`User: "${socket.id}" joined room: "${room}"`)
     })
 
     socket.on('room', (data)=>{
         const {ic} = data
-        socketRoom = ic
-        socket.join(ic)
-        rooms[ic] = data
-        io.emit('rooms', {email, ic, name, lastname, message})
+        if (rooms[ic]) {
+            console.log(`Room ${ic} already exists`);
+        }else{
+            socketRoom = ic
+            rooms[ic] = data
+            socket.broadcast.emit('rooms', rooms)
+            socket.join(ic)
+            console.log(`Room ${ic} created`);
+        }
     })
 
     // socket.on('leave', (data) => {
@@ -93,10 +109,11 @@ io.on('connection', (socket) => {
     //     console.log(`User: "${user}" left room: "${room}"`)
     // })
 
-    socket.on('chat', (data) => {
-        io.to(socketRoom).emit('chat', {username: socketMap[socket.id], message: data.msg})
+    socket.on('chat', (message) => {
+        const username = socket.handshake.auth.username
+        io.to(socketRoom).emit('chat', {username, message})
         // console.log(`Enviado msg: ${data.msg} al room: ${data.room}`)
-        console.log(`Enviado msg: ${data.msg} al room: ${socketRoom}`)
+        console.log(`Enviado msg: ${message} al room: ${socketRoom}`)
     })
 
     socket.on('switch', (data) => {
