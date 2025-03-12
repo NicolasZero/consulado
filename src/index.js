@@ -67,11 +67,11 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log(`user disconnected: ${socket.id}`)
-        console.log(socket.handshake.auth)
-        // if (socket.handshake.auth.roles !== roles.) {
-            
-        // }
-        // delete rooms
+        // console.log(socket.handshake.auth)
+        if (socket.handshake.auth.ic) {
+            delete rooms[socket.handshake.auth.ic]
+            socket.broadcast.emit('rooms', rooms)
+        }
     })
 
     socket.on('rooms', (params) => {

@@ -58,8 +58,7 @@
             printMsg({username: name, message})
 
             if (!socket) {
-                const data =  { username : name, ic : ic }
-                initiateSocket(data)
+                initiateSocket({ username : name, ic : ic })
             }
 
             socket.emit('room', {email, ic, name, lastname, message})

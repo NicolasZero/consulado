@@ -60,8 +60,9 @@
                 // if (data) return
                 console.log(data);
                 rooms = data
-                list.innerHTML = ''
+                document.getElementById('chat-body').innerHTML = '' // limpiar el chat
                 const list = document.querySelector('.list-group')
+                list.innerHTML = ''
                 let a = 1
                 for (let clave in data){
                     // console.log("valor: ",data[clave]);
@@ -167,7 +168,8 @@
         // Funcion para desconectarse de la sala
         const disconnectSocket = () => {
             if(socket) {
-                socket.disconnect()
+                // socket.disconnect()
+                
                 roomSelected = null
                 console.log('Socket desconectado')
             };
