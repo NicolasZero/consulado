@@ -1,13 +1,14 @@
 import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
 import sqlite from 'sqlite3'
-import e from 'express';
 
 // constantes
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+console.log(__dirname)
+
 // Conecta a la base de datos
-export const db = new sqlite.Database(join(__dirname,"data","data.db"), sqlite.OPEN_READWRITE, (err) => {
+export const db = new sqlite.Database(join(__dirname,"..","data","data.db"), sqlite.OPEN_READWRITE, (err) => {
     if (err) return console.error(err.message)
 })
 
