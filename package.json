@@ -17,10 +17,11 @@
   "homepage": "https://github.com/NicolasZero/consulado#readme",
   "description": "",
   "dependencies": {
+    "bcrypt": "5.1.1",
     "ejs": "3.1.10",
     "express": "4.21.2",
     "fs": "0.0.1-security",
     "socket.io": "4.8.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "5.1.7"
   }
 }

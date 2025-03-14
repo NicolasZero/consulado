@@ -1,20 +1,18 @@
 import express from 'express';
 
 // para el manejo de rutas
-import {dirname, join} from 'path';
-import {fileURLToPath} from 'url';
+import {dirname, join} from 'node:path';
+import {fileURLToPath} from 'node:url';
 
 // Socket io / websockets
 import { Server } from 'socket.io';
-import { createServer } from 'http';
+import { createServer } from 'node:http';
 
 // Base de datos
 import sqlite from 'sqlite3'
 
 // Rutas
 import router from './routes/router.js';
-import { Socket } from 'dgram';
-import { sourceMapsEnabled } from 'process';
 
 import {allOptions, roles} from './const/const.js'
 
@@ -124,6 +122,9 @@ io.on('connection', (socket) => {
         console.log(`Switched room from ${prevRoom} to ${nextRoom}`);
     })
 })
+
+//middlewares
+app.use(express.json())
 
 app.set('view engine', 'ejs'); //Definir que las vistas usan EJS
 app.set('views', join(__dirname,'views')); //Definir la ubicación de las vistas

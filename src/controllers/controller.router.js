@@ -1,8 +1,8 @@
-import fs from 'fs'
-import {dirname, join} from 'path';
-import {fileURLToPath} from 'url';
+import fs from 'node:fs'
+import {dirname, join} from 'node:path';
+import {fileURLToPath} from 'node:url';
 
-import {selectAll} from '../model/Db.js'
+// import {selectAll} from '../model/Db.js'
 
 const title = 'Consulado contigo'
 
@@ -55,7 +55,7 @@ const home = (req, res) => {
     })
 }
 
-const cities = (req, res) => {
+const networks = (req, res) => {
     const pathRouter = join(__dirname,"..","data","cities.json")
 
     const countryId = req.params.country || ''
@@ -145,7 +145,7 @@ const supportNetwork = (req, res) => {
 
 export default {
     home,
-    cities,
+    networks,
     consulates,
     supportNetwork,
     chat,

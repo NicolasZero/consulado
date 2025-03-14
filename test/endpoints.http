@@ -1,0 +1,25 @@
+@url = http://localhost:8080/api
+
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "pikachu",
+    "password": "12345678"
+}
+
+###
+
+POST {{url}}/dev/createdb
+
+###
+
+POST {{url}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "pikachu",
+    "password": "12345678"
+}
+###
+delete {{url}}/dev/user/"id"
