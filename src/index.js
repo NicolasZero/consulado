@@ -47,8 +47,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // })
 
 // process.loadEnvFile('.env')
-// const {PORT:port = 8080} = process.env;
-const port = 8080
+const {PORT:port = 8080} = process.env;
+// const port = 8080
 
 const app = express();
 const server = createServer(app);

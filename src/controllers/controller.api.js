@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import {connect} from '../model/Db.js'
 
@@ -13,30 +14,35 @@ const login = async (req, res) => {
         }
 
         if (username.length < 3 || password.length < 8) {
-            return res.status(400).json({status: 'error',message: 'El usuario o la contraseña no cumplen con el mínimo de caracteres'})
+            return res.status(401).json({status: 'error', message: 'El usuario o la constraseña es incorrecta'})
         }
 
         const sql = `SELECT * FROM users WHERE name = ?`
 
-        db.get(sql, [username], (err, row) => {
+        db.get(sql, [username], async (err, row) => {
             if (err) {
                 console.error(err.message)
                 return res.status(500).json({status: 'error', message: 'Error al iniciar sesión'})
             }
 
             if (!row || row.length === 0) {
-                return res.status(400).json({status: 'error', message: 'El usuario o la constraseña es incorrecta'})
+                return res.status(401).json({status: 'error', message: 'El usuario o la constraseña es incorrecta'})
+            }
+            const {id, name} = row
+
+            // Valida la contraseña
+            const valid = await bcrypt.compare(password, row.password)
+            if (!valid) {
+                return res.status(401).json({status: 'error',message: 'El usuario o la contraseña es incorrecta'})
             }
 
-            if (!bcrypt.compareSync(password, row.password)) {
-                return res.status(400).json({status: 'error',message: 'El usuario o la contraseña es incorrecta'})
-            }
-
-            return res.status(200).json({status: 'success', message: 'Sesión iniciada', data: row})
+            // Genera el token
+            const token = jwt.sign({id, name}, process.env.JWT_SECRET, {expiresIn: '1h'})
+            return res.status(200).json({status: 'ok', message: 'Sesión iniciada', token})
         })
-
         // cierra la conexión
         db.close(err => err ? console.error(err) : console.log('Conección cerrada'))
+
     } catch (error) {
         console.log(error);
         res.status(500).json({status: 'error', message: 'Error en el servidor'})
@@ -44,9 +50,9 @@ const login = async (req, res) => {
 }
 
 // Registra un nuevo usuario
-const register = async (req, res) => {
-    const db = connect()
+const register = (req, res) => {
     try {
+        const db = connect()
         // Variables
         let sql = ''
         
@@ -65,10 +71,10 @@ const register = async (req, res) => {
         // sql para buscar si el usuario ya existe
         sql = `SELECT * FROM users WHERE name = ?`
 
-        await db.get(sql, [username], async (err, row) => {
+        db.get(sql, [username], async (err, row) => {
             if (err) {
                 console.error(err.message)
-                return res.status(500).json({status: 'error', message: 'Error al crear el usuario. C-01'})
+                return res.status(500).json({status: 'error', message: 'Error al crear el usuario'})
             }
 
             // Si el usuario ya existe
@@ -90,16 +96,17 @@ const register = async (req, res) => {
             db.run(sql, [id, username, hashedPassword], (err) => {
                 if (err) { 
                     console.error(err.message)
-                    return res.status(500).json({status: 'error', message: 'Error al crear el usuario. C-02'})
+                    return res.status(500).json({status: 'error', message: 'Error al crear el usuario'})
                 }
-                return res.status(200).json({status: 'success', message: 'Usuario creado'})
+                return res.status(200).json({status: 'ok', message: 'Usuario creado'})
             })
+
+            db.close(err => err ? console.error(err) : console.log('Conección cerrada'))
+
         })
     } catch (error) {
         console.error(error)
         res.status(500).json({status: 'error', message: 'Error en el servidor'})
-    } finally {
-        db.close(err => err ? console.error(err) : console.log('Conección cerrada'))
     }
 }
 
@@ -120,7 +127,7 @@ const createdb = (req, res) => {
                 console.error(err.message)
                 return res.status(500).json({status: 'error', message: 'Error al crear la base de datos'})
             }
-            return res.status(200).json({status: 'success', message: 'Base de datos creada'})
+            return res.status(200).json({status: 'ok', message: 'Base de datos creada'})
         })
         db.close(err => err ? console.error(err) : console.log('Conección cerrada'))
     } catch (error) {
@@ -138,7 +145,7 @@ const deleteUser = (req, res) => {
                 console.error(err.message)
                 return res.status(500).json({status: 'error', message: 'Error al eliminar el usuario'})
             }
-            return res.status(200).json({status: 'success', message: 'Usuario eliminado'})
+            return res.status(200).json({status: 'ok', message: 'Usuario eliminado'})
         })
     } catch (error) {
         console.log(error);
