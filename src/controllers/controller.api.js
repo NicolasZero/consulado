@@ -44,10 +44,9 @@ const login = async (req, res) => {
 }
 
 // Registra un nuevo usuario
-const register = (req, res) => {
+const register = async (req, res) => {
+    const db = connect()
     try {
-        const db = connect()
-
         // Variables
         let sql = ''
         
@@ -66,10 +65,10 @@ const register = (req, res) => {
         // sql para buscar si el usuario ya existe
         sql = `SELECT * FROM users WHERE name = ?`
 
-        db.get(sql, [username], (err, row) => {
+        await db.get(sql, [username], async (err, row) => {
             if (err) {
                 console.error(err.message)
-                return res.status(500).json({status: 'error', message: 'Error al crear el usuario'})
+                return res.status(500).json({status: 'error', message: 'Error al crear el usuario. C-01'})
             }
 
             // Si el usuario ya existe
@@ -80,28 +79,27 @@ const register = (req, res) => {
             // Si el usuario no existe prosigue a crearlo
 
             // Encripta la contraseña
-            const hashedPassword = bcrypt.hashSync(password, 10)
+            const hashedPassword = await bcrypt.hash(password, 10)
 
             // Genera el id
             const id = crypto.randomUUID()
 
-            // Sql para insertar
+            // Sql para insertar el usuario
             sql = `INSERT INTO users (id, name, password) VALUES (?, ?, ?)`
 
             db.run(sql, [id, username, hashedPassword], (err) => {
                 if (err) { 
                     console.error(err.message)
-                    return res.status(500).json({status: 'error', message: 'Error al crear el usuario'})
+                    return res.status(500).json({status: 'error', message: 'Error al crear el usuario. C-02'})
                 }
                 return res.status(200).json({status: 'success', message: 'Usuario creado'})
             })
         })
-        
-        // Cierra la conexión
-        db.close(err => err ? console.error(err) : console.log('Conección cerrada'))
     } catch (error) {
         console.error(error)
         res.status(500).json({status: 'error', message: 'Error en el servidor'})
+    } finally {
+        db.close(err => err ? console.error(err) : console.log('Conección cerrada'))
     }
 }
 

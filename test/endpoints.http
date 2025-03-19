@@ -1,5 +1,7 @@
+# Para testear la api
 @url = http://localhost:8080/api
 
+# Login
 POST {{url}}/auth/login
 Content-Type: application/json
 
@@ -8,18 +10,20 @@ Content-Type: application/json
     "password": "12345678"
 }
 
-###
-
+### 
+#crear BD
 POST {{url}}/dev/createdb
 
 ###
-
+# Registrar usuario
 POST {{url}}/auth/register
 Content-Type: application/json
 
 {
-    "username": "pikachu",
+    "username": "pepe",
     "password": "12345678"
 }
+
 ###
+# Eliminar usuario
 delete {{url}}/dev/user/"id"
